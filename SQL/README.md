@@ -37,7 +37,7 @@ Exemplo:
 
 # Tutorial Parte II - Tipos de Dados
 
-# Tipos de Dados em SQL
+## Tipos de Dados em SQL
 
 Ao criar tabelas em SQL, cada coluna precisa ter um tipo de dado definido. O tipo de dado determina o tipo de valores que aquela coluna pode armazenar, como texto, números ou datas.
 
