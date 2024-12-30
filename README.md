@@ -19,7 +19,6 @@ Para cada banco de dados, você encontrará explicações sobre como configurar,
 - Relacionamentos entre tabelas e normalização de dados
 - Criação de índices e otimização de consultas
 - Como usar ferramentas como DBeaver e pgAdmin para gerenciar seus bancos de dados
-- Conceitos sobre bancos de dados NoSQL e suas diferenças em relação aos relacionais
 
 ## 🚀 Como Usar
 
