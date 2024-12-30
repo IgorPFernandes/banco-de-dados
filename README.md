@@ -22,10 +22,12 @@ Para cada banco de dados, você encontrará explicações sobre como configurar,
 
 ## 🚀 Como Usar
 
-1. **Clone o repositório:**
+1. **Leia o tutorial do README do Banco de dados de interesse**
+
+2. **Clone o repositório:**
    ```bash
    git clone https://github.com/IgorPFernandes/analise-de-dados.git
 
-2. **Acesse a pasta SQL e leia o README:**
+
 
 
