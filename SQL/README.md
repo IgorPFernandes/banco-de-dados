@@ -1,6 +1,6 @@
 # Tutorial Parte I - Entendendo as Nomenclaturas
 
-Neste tutorial, vamos entender as nomenclaturas e conceitos básicos relacionados a banco de dados, SQL e operações comuns em um banco relacional.
+Neste tutorial, vamos entender as nomenclaturas e conceitos básicos relacionados a banco de dados, postgreSQL e operações comuns em um banco relacional.
 
 ### O que é uma **query**?
 
