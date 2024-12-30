@@ -101,10 +101,6 @@ Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garanti
 
 ```sql
 
--- deletando tabela 
-
-drop table usuarios;
-
 -- criando  tabela novamente para reforçar
 
 create table usuarios (
