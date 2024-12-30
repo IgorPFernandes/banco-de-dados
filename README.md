@@ -9,8 +9,8 @@ Este repositório contém tutoriais, exemplos de código e projetos práticos qu
 ### Banco de Dados
 Aqui, vou explorar diversos tipos de bancos de dados e suas funcionalidades, como:
 
-- **PostgreSQL**
-
+- **PostgreSQL** (Aprendendo)
+  
 Para cada banco de dados, você encontrará explicações sobre como configurar, manipular dados, realizar consultas e otimizar o desempenho de consultas, além de exemplos práticos.
 
 ### O Que Você Vai Aprender
