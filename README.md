@@ -18,7 +18,6 @@ Para cada banco de dados, você encontrará explicações sobre como configurar,
 - Manipulação de dados com SQL (inserção, atualização, exclusão, consultas)
 - Relacionamentos entre tabelas e normalização de dados
 - Criação de índices e otimização de consultas
-- Como usar ferramentas como DBeaver e pgAdmin para gerenciar seus bancos de dados
 
 ## 🚀 Como Usar
 
