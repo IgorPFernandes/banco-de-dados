@@ -22,7 +22,7 @@ Para cada banco de dados, você encontrará explicações sobre como configurar,
 
 ## 🚀 Como Usar
 
-1. **Leia o tutorial do README do Banco de dados de interesse**
+1. **Leia o tutorial no README do Banco de dados de interesse**
 
 2. **Clone o repositório:**
    ```bash
