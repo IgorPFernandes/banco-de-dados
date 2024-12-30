@@ -1,4 +1,4 @@
-# Tutorial Parte I - Entendendo as Nomenclaturas
+# Tutorial Parte I - Entendendo as Nomenclaturas Iniciais
 
 Neste tutorial, vamos entender as nomenclaturas e conceitos básicos relacionados a banco de dados, postgreSQL e operações comuns em um banco relacional.
 
@@ -33,6 +33,67 @@ A **chave primária** é uma coluna (ou conjunto de colunas) que identifica de f
 Uma **chave estrangeira** é uma coluna em uma tabela que faz referência à chave primária de outra tabela. Ela é usada para estabelecer relacionamentos entre duas tabelas, permitindo que as informações sejam associadas de maneira eficiente.
 
 Exemplo:
-- Em uma tabela de **usuários**, a chave estrangeira pode ser `condominio_id`, que faz referência à tabela `condominio` e liga um usuário a um condomínio específico.
+- Em uma tabela de **usuários**, a chave estrangeira pode ser `condominio_id`, que faz referência à tabela `condominio` e liga um usuário a um condomínio específico. (Presente no exemplo 1 dos scripts)
 
-# Tutorial Parte II - Criação e Relacionamento de Tabelas
+# Tutorial Parte II - Tipos de Dados
+
+# Tipos de Dados em SQL
+
+Ao criar tabelas em SQL, cada coluna precisa ter um tipo de dado definido. O tipo de dado determina o tipo de valores que aquela coluna pode armazenar, como texto, números ou datas.
+
+## Principais Tipos de Dados
+
+### 1. **Tipos Numéricos**
+Usados para armazenar números inteiros ou decimais.
+
+- **`INT`**: Armazena números inteiros. Exemplo: 1, 42, -100.  
+  - **`SMALLINT`**: Para números inteiros menores (economiza espaço). Exemplo: 1, 255.
+  - **`BIGINT`**: Para números inteiros grandes. Exemplo: 9.223.372.036.854.775.807.
+- **`DECIMAL(p, s)` ou `NUMERIC(p, s)`**: Armazena números decimais com precisão definida.  
+  - `p`: Total de dígitos.  
+  - `s`: Quantidade de dígitos após o ponto decimal.  
+  - Exemplo: `DECIMAL(10, 2)` armazena até 10 dígitos, sendo 2 após o ponto decimal (como `12345678.90`).
+- **`FLOAT`** ou **`REAL`**: Para números com ponto flutuante (menos precisos que `DECIMAL`).
+
+### 2. **Tipos de Texto**
+Usados para armazenar strings (textos).
+
+- **`CHAR(n)`**: Armazena strings de tamanho fixo. Exemplo: `CHAR(5)` sempre reserva 5 caracteres, mesmo que o valor seja menor.
+- **`VARCHAR(n)`**: Armazena strings de tamanho variável até o limite especificado. Exemplo: `VARCHAR(100)` permite strings de até 100 caracteres.
+- **`TEXT`**: Para armazenar textos longos sem limite especificado. Exemplo: Artigos ou descrições detalhadas.
+
+### 3. **Tipos de Data e Hora**
+Usados para armazenar informações temporais.
+
+- **`DATE`**: Apenas a data (ano, mês, dia). Exemplo: `2024-12-30`.
+- **`TIME`**: Apenas a hora (hora, minutos, segundos). Exemplo: `14:30:00`.
+- **`TIMESTAMP`**: Combina data e hora. Exemplo: `2024-12-30 14:30:00`.
+- **`INTERVAL`**: Armazena períodos de tempo (como "2 dias" ou "3 horas").
+
+### 4. **Tipos Booleanos**
+Armazena valores lógicos.
+
+- **`BOOLEAN`**: Representa `TRUE`, `FALSE` ou `NULL`.
+
+### 5. **Tipos Especiais**
+Usados para casos mais específicos.
+
+- **`SERIAL`**: Usado para criar identificadores únicos automaticamente. Geralmente usado para chaves primárias. Exemplo: `id SERIAL`.
+- **`JSON`** ou **`JSONB`**: Para armazenar dados no formato JSON (útil em bancos modernos).
+- **`ARRAY`**: Permite armazenar múltiplos valores em uma única coluna.
+
+## Escolhendo o Tipo Certo
+
+Escolher o tipo de dado correto é essencial para garantir que:
+1. **Os valores armazenados estejam no formato correto.**
+2. **O espaço de armazenamento seja utilizado de forma eficiente.**
+
+Por exemplo:
+- Para **idade**, use `SMALLINT` em vez de `INT`, pois o valor máximo será pequeno.
+- Para **nomes**, use `VARCHAR(100)` ou `TEXT` dependendo da necessidade.
+- Para valores monetários, `DECIMAL(10, 2)` é uma escolha ideal.
+
+---
+
+Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garantindo consistência e desempenho no banco de dados.
+
