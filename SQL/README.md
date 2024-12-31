@@ -146,7 +146,8 @@ values
 
 select * from condominio;
 
---agora eu estou fazendo a relação entre as tabelas, para começo adicionei uma nova coluna na tabela usuarios
+--agora eu estou fazendo a relação entre as tabelas, para começo
+--adicionei uma nova coluna na tabela usuarios
 
 alter table usuarios
 add column condominio_id INT;
@@ -176,7 +177,9 @@ left join condominio c on u.condominio_id = c.id;
 
 update condominio
 set nome = 'Mariana'
-where id = 6; -- Como eu deletei algumas vezes, o id de condominio continuou subindo, logo quando voltei a essa correção tive que mudar o número do id
+where id = 6;
+-- Como eu deletei algumas vezes, o id de condominio continuou subindo,
+-- logo quando voltei a essa correção tive que mudar o número do id
 --mas caso você esteja fazendo isso pela primeira vez então: where id = 2;
 
 --Novamente
@@ -192,18 +195,21 @@ select u.id as usuario_id, u.nome as usuario_nome, u.email as usuario_email, u.c
 from usuarios u
 left join condominio c on u.condominio_id = c.id;
 
--- Apenas o usuarios que possuem um condominio_id dentro da tabela de usuarios compatível com um condominio_id dentro da tabela condominio serão mostrados
+-- Apenas o usuarios que possuem um condominio_id dentro da tabela de usuarios
+-- compatível com um condominio_id dentro da tabela condominio serão mostrados
 select usuarios.nome, condominio.nome
 from usuarios
 inner join condominio on usuarios.condominio_id = condominio.id;
 
---Serão mostrados todos os nomes da tabela da esquerda, mas a da direita os que não estiverem de acordo com a condição será apresentado como NULL
+-- Serão mostrados todos os nomes da tabela da esquerda, mas a da direita os
+-- que não estiverem de acordo com a condição será apresentado como NULL
 
 select usuarios.nome, condominio.nome
 from usuarios
 left join condominio on usuarios.condominio_id = condominio.id;
 
---Serão mostradas condominio.nome da tabela da direita, mas o que não estiver associado na esquerda será demonstrado como NULL
+-- Serão mostradas condominio.nome da tabela da direita, mas o que
+-- não estiver associado na esquerda será demonstrado como NULL
 
 select usuarios.nome, condominio.nome
 from usuarios
@@ -215,7 +221,8 @@ select usuarios.nome, condominio.nome
 from usuarios
 full join condominio on usuarios.condominio_id = condominio.id;
 
---Todos os usuarios serão combinados com todos os nomes de condominios formando a todas as combinações possíveis, resumindo: é um produto cartesiano.
+--Todos os usuarios serão combinados com todos os nomes de condominios
+-- formando a todas as combinações possíveis, resumindo: é um produto cartesiano.
 
 select usuarios.nome, condominio.nome
 from usuarios
@@ -271,7 +278,8 @@ alter table cartao_credito
 add column data_validade DATE, --percebi que para ser realista faltou esses dois dados!!
 add column cvv smallint;
 
-insert into cartao_credito (cliente_id ,numero_cartao, limite, limite_disponivel, data_validade, cvv) -- Perceba que colocando o ID a gente é quem decide de quem é o cartão
+-- Perceba que colocando o ID a gente é quem decide de quem é o cartão
+insert into cartao_credito (cliente_id ,numero_cartao, limite, limite_disponivel, data_validade, cvv) 
 values
 (1,'5564959910010564', 1200.00, 1200.00, '2026-01-31', 381), --Perceba que eu coloquei YYYY/MM/DD quando pesquisei vi que esse era o formato de DATE
 (2,'5138020755144971', 800.00, 800.00, '2026-07-01', 504);
@@ -293,19 +301,22 @@ create table extrato_banco (
 
 select * from extrato_banco;
 
--- acabei de notar que se eu quiser deixar isso bem realista vou ter que fazer uma forma de debitar o limite quando o dado for inserido no extrato_banco
+-- Acabei de notar que se eu quiser deixar isso bem realista vou ter que
+-- fazer uma forma de debitar o limite quando o dado for inserido no extrato_banco
 
 CREATE OR REPLACE FUNCTION debitar_limite()
 RETURNS TRIGGER AS $$  -- Delimitador do corpo da função começa aqui
 BEGIN
     -- Atualiza o limite disponível do cartão de crédito
     UPDATE cartao_credito
-    SET limite_disponivel = limite_disponivel - NEW.valor_compra --Você também percebeu que temos colunas de tabelas distintas aqui, isso ocorre porque ainda vamos
-    WHERE id = NEW.cartao_id;--                                    relacionar a tabela de ativação do trigger a tabela que possui a coluna limite_disponivel
+    --Você também percebeu que temos colunas de tabelas distintas aqui, isso ocorre porque ainda vamos
+    --relacionar a tabela de ativação do trigger a tabela que possui a coluna limite_disponivel
+    SET limite_disponivel = limite_disponivel - NEW.valor_compra 
+    WHERE id = NEW.cartao_id;
 
     RETURN NEW; -- Retorna a linha modificada no trigger
 END;
-$$ LANGUAGE plpgsql;  -- Delimitador termina aqui, plpgsql é a linguagem embutida no postgresql para usar um (for,if...)
+$$ LANGUAGE plpgsql; -- Delimitador termina aqui, plpgsql é a linguagem embutida no postgresql para usar um (for,if...)
 
 
 CREATE TRIGGER after_insert_extrato
@@ -338,7 +349,8 @@ from extrato_banco e
 join cliente c on e.cliente_id = c.id -- join sem especificação sempre é inner join!!
 group by c.nome,cliente_id;
 
-select c.nome,e.cartao_id, avg(valor_compra) as media_compra -- Vemos aqui que ivanilson é bem mais economico e mantém suas compras em uma média bem mais regular
+-- Vemos aqui que ivanilson é bem mais economico e mantém suas compras em uma média bem mais regular
+select c.nome,e.cartao_id, avg(valor_compra) as media_compra 
 from extrato_banco e
 join cliente c on e.cliente_id = c.id --lembrando que esse "on" é como se fosse um "quando", então quando e.cliente_id = c.id, mostre o resultado da seleção
 group by c.nome,cartao_id;
@@ -357,7 +369,8 @@ from extrato_banco e
 join cliente c on e.cliente_id = c.id
 group by c.nome,cliente_id;
 
--- Lembrando que se você quiser ver só o ID sem o nome, retira o join, retira o c.nome do group by e retira os "alises" ,ou seja, as abreviações
+-- Lembrando que se você quiser ver só o ID sem o nome, retira o join,
+-- retira o c.nome do group by e retira os "alises" ,ou seja, as abreviações
 
 -- Vamos fazer alguns filtros nessas buscas!!!
 
@@ -383,7 +396,8 @@ group by c.nome, e.cliente_id;
 
 -- o que acontece se a gente não usar o group by ?
 
-select sum(valor_compra) as total_compra -- surgiu um valor de 830, pesquisei no GPT ele disse que é a soma de todas as linhas é interessante saber..
+-- surgiu um valor de 830, pesquisei no GPT ele disse que é a soma de todas as linhas é interessante saber..
+select sum(valor_compra) as total_compra 
 from extrato_banco;
 
 ```
