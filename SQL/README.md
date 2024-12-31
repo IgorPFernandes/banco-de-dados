@@ -387,3 +387,4 @@ select sum(valor_compra) as total_compra -- surgiu um valor de 830, pesquisei no
 from extrato_banco;
 
 ```
+# Tutorial Parte IV - Como realizar backup
