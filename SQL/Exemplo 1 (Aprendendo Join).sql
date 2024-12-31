@@ -94,10 +94,6 @@ from usuarios u
 left join condominio c on u.condominio_id = c.id;
 
 
-insert into condominio(nome,apartamento,bloco,aluguel)
-values
-('José', )
-
 -- Apenas o usuarios que possuem um condominio_id dentro da tabela de usuarios compatível com um condominio_id dentro da tabela condominio serão mostrados
 select usuarios.nome, condominio.nome
 from usuarios
