@@ -622,6 +622,75 @@ Ao exportar uma tabela no DBeaver (ou em qualquer outro sistema de gerenciamento
 
 Isso garantirá que você consiga restaurar ou importar os dados corretamente em outro banco de dados.
 
+## Como descobrir as relações sem precisar consultar uma a uma ?
+
+```sql
+SELECT 
+    conrelid::regclass AS table_name,
+    confrelid::regclass AS foreign_table_name
+FROM 
+    pg_constraint
+WHERE 
+    contype = 'f';
+```
+
 # Configurações de Importação no DBeaver
 
-Digamos que você perdeu completamente os dados de uma tabela sem querer 
+Digamos que você perdeu completamente os dados das tabelas de extrato_banco, clientes, cartao_credito. Fiz a minha extração (backup) das tabelas e agora estou tentando recuperar.
+
+## Fazemos a exportação do que queremos recuperar depois
+
+![Export4](./Imagens/Export4.png)
+
+## Como começar a importação:
+
+![Import](./Imagens/Import.png)
+
+## Conferir o formato do arquivo (O próprio dbeaver já dá a sujestão)
+
+![Import2](./Imagens/Import2.png)
+
+## Clica em Navegar para escolher o diretório
+
+![Import3](./Imagens/Import3.png)
+
+## Verifica os arquivos
+
+![Import3](./Imagens/Import4.png)
+
+Vocês podem ter percebido antes, mas eu só percebi aqui a besteira que fiz. Porém tem conserto porque fiz um full backup antes de começar a excluir qualquer coisa.
+Aqui temos duas opções:
+
+### Opção 1 Recuperar apenas tabelas especificas do backup completo:
+
+Então eu apaguei os export e recuperei logo as 3 para aprender a recuperar multiplas tabelas.
+
+```bash
+pg_restore -U igor -d aprendendo -t extrato_banco -t cliente -t cartao_credito "C:\Users\igorp\OneDrive\Desktop\Meus Estudos\Aprendizagem Individual\Banco de Dados\SQL\Backup\backup.dump"
+```
+### Opção 2 Restaurar o banco de dados completo para um limpo e retomar daquele ponto:
+
+Apesar de ser uma opção viável nesse caso, quando falamos de minimizar os dados é um fato que outras tabelas associadas podiam ter dados depois do ponto de restauração
+Então fazendo dessa forma eu estaria perdendo esses dados, esse não é o caso porque eu não fiz inserts, mas é um caso que poderia acontecer durante o trabalho.
+
+Então eu criaria um banco novo e limpo:
+
+```sql
+CREATE DATABASE aprendendo;
+```
+Para logo em seguida efetuar o restore:
+
+```bash
+pg_restore -U igor -d aprendendo "C:\Users\igorp\OneDrive\Desktop\Meus Estudos\Aprendizagem Individual\Banco de Dados\SQL\Backup\primeirobackup.dump"
+```
+IMPORTANTE: Lembre de atualizar o banco antes de achar que deu errado! Quando restauramos as tabelas especificas as chaves estrangeiras são afetadas
+então você vai ter que reatar essa conexão manualmente. O que não aconteceria em um full restore para um banco limpo porque ele iria restaurar o esquema.
+Como eu escolhi a opção um sou obrigado a fazer essa conexão manualmente logo:
+
+```sql
+
+```
+
+
+AGORA SIM! Vamos continuar com o processo de importação!
+
