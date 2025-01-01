@@ -683,11 +683,13 @@ Para logo em seguida efetuar o restore:
 ```bash
 pg_restore -U igor -d aprendendo "C:\Users\igorp\OneDrive\Desktop\Meus Estudos\Aprendizagem Individual\Banco de Dados\SQL\Backup\primeirobackup.dump"
 ```
-IMPORTANTE: Lembre de atualizar o banco antes de achar que deu errado! Quando restauramos as tabelas especificas as chaves estrangeiras são afetadas
+IMPORTANTE: Lembre de atualizar o banco antes de achar que deu errado! Quando restauramos as tabelas especificas as chaves são afetadas
 então você vai ter que reatar essa conexão manualmente. O que não aconteceria em um full restore para um banco limpo porque ele iria restaurar o esquema.
 Como eu escolhi a opção um sou obrigado a fazer essa conexão manualmente logo:
 
+Além disso no meu caso percebi que todos os meu dados foram duplicados então vou ter que excluir os dados duplicados.
 ```sql
+
 
 ```
 
