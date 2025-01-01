@@ -246,7 +246,7 @@ select * from condominio;
 
 -- Agora repita todos os comandos anteriores de Inner, Left, Right, Full e Cross. Agora você vai entender a diferença!
 ```
-# Tutorial Parte IV - Funções básicas de Agragação e Trigger
+# Tutorial Parte IV - Funções básicas de Agregação e Trigger
 
 ```sql
 -- Vamos criar um novo contexto com novas tabelas para aprender sobre funções básicas de agregação (count,sum,avg,max,min)
