@@ -438,7 +438,10 @@ COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Indiv
 ```
 # Configurações de Extração no DBeaver
 
+## Como começar:
 ![Como Extrair](./Imagens/Export.png)
+
+##Formatos:
 ![Formatos de Extração](./Imagens/Export2.png)
 
 ## Formatos de Exportação no DBeaver
