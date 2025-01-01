@@ -438,7 +438,7 @@ COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Indiv
 ```
 # Configurações de Extração no DBeaver
 
-![Extração](./Imagens/Export.png)
+![Formatos de Extração](./Imagens/Export.png)
 
 ## Formatos de Exportação no DBeaver
 
@@ -533,6 +533,8 @@ COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Indiv
 - **Arquivos Brutos ou Logs:** Escolha **Plain Text**.
 
 ## 1. Tipos de Extração
+
+![Tipos de Extração](./Imagens/Export2.png)
 
 ### a) Consulta Única (Single Query)
 - Extrai **todos os dados em uma única consulta** ao banco de dados.
