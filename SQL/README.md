@@ -436,7 +436,7 @@ COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Indiv
 
 -- 2ª Forma via Dbeaver
 ```
-# Configurações de Extração no DBeaver
+# Configurações de Extração no DBeaver (Escolhas Cruciais)
 
 ## Como começar:
 ![Como Extrair](./Imagens/Export.png)
@@ -594,3 +594,34 @@ O **fetch size** é o número de registros que o DBeaver busca do banco de dados
 - Reduza o **fetch size** para algo como 500 ou 1.000.
 
 Essas opções permitem balancear memória, desempenho e estabilidade durante a exportação. 🚀
+Agora basta escolher o destino para não perder os dados da tabela!!
+
+## Exportação de Tabelas com Chaves Estrangeiras no DBeaver
+
+Ao exportar uma tabela no DBeaver (ou em qualquer outro sistema de gerenciamento de banco de dados), é ideal considerar também as tabelas que possuem chaves estrangeiras relacionadas a ela. Isso ocorre porque, ao exportar apenas a tabela principal, você pode perder o contexto de integridade referencial entre os dados, o que pode causar problemas ao tentar importar os dados posteriormente.
+
+### Razões para Exportar Tabelas Relacionadas com Chaves Estrangeiras
+
+1. **Integridade Referencial**
+   - Quando uma tabela possui chaves estrangeiras que fazem referência a outras tabelas, a exportação dessas tabelas relacionadas ajuda a manter a integridade dos dados. Sem essas tabelas relacionadas, os dados podem ser importados de maneira inconsistente, quebrando as relações entre os registros.
+
+2. **Facilidade de Restauração**
+   - Se você precisar restaurar o banco de dados a partir de um backup, ter todas as tabelas relacionadas ajuda a garantir que as relações de chave estrangeira serão preservadas. Por exemplo, se você tiver uma tabela `pedidos` com uma chave estrangeira para a tabela `clientes`, mas não exportar a tabela `clientes`, os registros de `pedidos` podem não ter o cliente correspondente após a importação.
+
+3. **Evitar Erros de Inserção**
+   - Se você exportar apenas a tabela que contém a chave estrangeira (sem as tabelas de referência), ao tentar importar os dados, pode ocorrer um erro de violação de chave estrangeira. O banco de dados não permitirá a inserção de um registro na tabela `pedidos` se o valor da chave estrangeira não existir na tabela `clientes`.
+
+4. **Garantia de Consistência**
+   - Exportar todas as tabelas relacionadas garante que você terá dados completos e consistentes. Isso é especialmente importante se as tabelas têm muitos relacionamentos e dependem umas das outras.
+
+### O que fazer na prática?
+
+- Ao exportar uma tabela com chaves estrangeiras, **verifique as dependências** para garantir que todas as tabelas relacionadas sejam exportadas também.
+- Em muitos casos, o DBeaver irá permitir que você selecione múltiplas tabelas para exportação, o que facilita esse processo.
+- Se você não puder exportar todas as tabelas de uma vez, **exporte as tabelas na ordem certa** (primeiro as tabelas referenciadas e depois as tabelas que possuem chaves estrangeiras).
+
+Isso garantirá que você consiga restaurar ou importar os dados corretamente em outro banco de dados.
+
+# Configurações de Importação no DBeaver
+
+Digamos que você perdeu completamente os dados de uma tabela sem querer 
