@@ -536,7 +536,7 @@ COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Indiv
 - **Relatórios Visualizáveis:** Use **HTML**.
 - **Arquivos Brutos ou Logs:** Escolha **Plain Text**.
 
-## 1. Tipos de Extração
+## 1. Configuração de Extração
 
 ![Tipos](./Imagens/Export3.png)
 
