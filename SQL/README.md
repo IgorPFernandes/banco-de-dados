@@ -246,7 +246,7 @@ select * from condominio;
 
 -- Agora repita todos os comandos anteriores de Inner, Left, Right, Full e Cross. Agora você vai entender a diferença!
 ```
-# Tutorial Parte IV - Funções básicas de Agragação e Trigger
+# Tutorial Parte IV - Funções básicas de Agregação e Trigger
 
 ```sql
 -- Vamos criar um novo contexto com novas tabelas para aprender sobre funções básicas de agregação (count,sum,avg,max,min)
@@ -403,4 +403,188 @@ from extrato_banco;
 ```
 # Tutorial Parte V - Como realizar backup
 
+```sql
 
+-- Vamos começar com um full backup
+
+-- Você vai colocar isso no terminal
+-- pg_dump -U igor -d aprendendo -F c -b -v -f "C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Individual/Banco de Dados/SQL/Backup/primeirobackup.dump"
+
+-- Se você não sabe o nome do usuario
+
+SELECT current_user;
+
+--lembrando que esse backup é feito no terminal, não precisa entrar no banco pelo psql.
+
+
+--Vamos aprender a Importar e Exportar Tabelas
+
+-- 1ª Forma é via query
+
+-- Exportação:
+
+COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Individual/Banco de Dados/SQL/TablesBackups/clientes_export.csv' DELIMITER ',' CSV HEADER;
+
+-- Se vocês se recordam eu tenho uma tabela chamada cliente, ela tem 4 colunas, id,cpf,nome,email.
+-- Defini um caminho para uma pasta, delimitei que o que está separando os dados é uma virgula
+-- e o formato é CSV, mas poderia ser também JSON,SQL ou Excel.
+
+--Porém vai dar permissão negada, tentei acessar pelo windows+R o Services.msc e mudar o usuario logon do serviço postgresql17
+--Mas não recomendo vai rodar muito e chegar a nada, procurei em fóruns e vi alguns profissionais falarem que é melhor usar
+--Import e export do pgAdmin ou apenas usar aqui do Dbeaver mesmo. (Estou falando isso mais a título de informação)
+
+
+-- 2ª Forma via Dbeaver
+```
+# Configurações de Extração no DBeaver
+
+![Extração](./Imagens/Export.png)
+
+## Formatos de Exportação no DBeaver
+
+### 1. **CSV (Comma-Separated Values)**
+- **Descrição:** Arquivo de texto onde os valores são separados por vírgulas (ou outro delimitador, como ponto-e-vírgula).
+- **Compatibilidade:** Suportado amplamente por ferramentas como Microsoft Excel, Google Sheets, LibreOffice Calc e bases de dados.
+- **Vantagens:**
+  - Simples e leve.
+  - Ideal para transferir dados entre sistemas ou abrir em planilhas.
+- **Desvantagens:**
+  - Não suporta formatação avançada (cores, fórmulas, etc.).
+  - Pode ter problemas com caracteres especiais se a codificação não for configurada corretamente.
+
+---
+
+### 2. **XLSX (Excel)**
+- **Descrição:** Formato nativo do Microsoft Excel.
+- **Compatibilidade:** Abrível diretamente no Excel, Google Sheets e LibreOffice Calc.
+- **Vantagens:**
+  - Suporta formatação avançada, fórmulas e gráficos.
+  - Ideal para relatórios que precisam de uma apresentação profissional.
+- **Desvantagens:**
+  - Arquivo mais pesado em comparação ao CSV.
+  - Pode ter problemas de compatibilidade com versões muito antigas do Excel.
+
+---
+
+### 3. **JSON (JavaScript Object Notation)**
+- **Descrição:** Formato leve e estruturado usado para troca de dados.
+- **Compatibilidade:** Suportado por linguagens de programação, APIs e sistemas web.
+- **Vantagens:**
+  - Estruturado e fácil de interpretar por sistemas automáticos.
+  - Ideal para integrar dados em aplicações ou APIs.
+- **Desvantagens:**
+  - Não é amigável para visualização humana.
+  - Não adequado para uso direto em planilhas.
+
+---
+
+### 4. **XML (eXtensible Markup Language)**
+- **Descrição:** Formato estruturado baseado em tags, semelhante ao HTML.
+- **Compatibilidade:** Suportado por bancos de dados, linguagens de programação e ferramentas específicas.
+- **Vantagens:**
+  - Altamente estruturado e flexível.
+  - Bom para integrar dados em sistemas complexos.
+- **Desvantagens:**
+  - Arquivo geralmente mais pesado.
+  - Menos intuitivo para leitura humana em comparação ao JSON.
+
+---
+
+### 5. **SQL**
+- **Descrição:** Exporta os dados como comandos SQL (INSERT), permitindo recriar os registros em outro banco.
+- **Compatibilidade:** Suportado por sistemas de banco de dados SQL.
+- **Vantagens:**
+  - Ideal para backups de tabelas específicas.
+  - Permite a restauração direta em outro banco de dados.
+- **Desvantagens:**
+  - Não é prático para análises ou visualização de dados.
+
+---
+
+### 6. **HTML**
+- **Descrição:** Exporta os dados em uma tabela HTML, visualizável em navegadores.
+- **Compatibilidade:** Pode ser aberto em qualquer navegador ou usado em páginas web.
+- **Vantagens:**
+  - Boa apresentação visual diretamente no navegador.
+  - Útil para relatórios visuais em páginas estáticas.
+- **Desvantagens:**
+  - Não é editável diretamente.
+  - Não adequado para análises ou manipulação de dados.
+
+---
+
+### 7. **Plain Text (Texto Simples)**
+- **Descrição:** Exporta os dados como texto puro, sem formatação.
+- **Compatibilidade:** Pode ser aberto em qualquer editor de texto.
+- **Vantagens:**
+  - Extremamente leve e simples.
+  - Ideal para logs ou arquivamento de dados em formato bruto.
+- **Desvantagens:**
+  - Nenhuma estrutura para análise direta.
+
+---
+
+## Como Escolher o Formato Ideal?
+
+- **Análise em Planilhas:** Use **CSV** ou **XLSX**.
+- **Integração com Sistemas:** Prefira **JSON** ou **XML**.
+- **Backup de Tabelas:** Opte por **SQL**.
+- **Relatórios Visualizáveis:** Use **HTML**.
+- **Arquivos Brutos ou Logs:** Escolha **Plain Text**.
+
+## 1. Tipos de Extração
+
+### a) Consulta Única (Single Query)
+- Extrai **todos os dados em uma única consulta** ao banco de dados.
+- A consulta é executada de forma completa, e os resultados são carregados inteiramente na memória do DBeaver antes da exportação.
+
+#### Vantagens:
+- Mais rápida para tabelas pequenas ou médias.
+- Menos interações com o banco de dados.
+
+#### Desvantagens:
+- Pode consumir muita memória e ser lenta para tabelas grandes, pois carrega todos os dados de uma vez.
+- Risco de erros ou travamentos em tabelas com milhões de registros.
+
+---
+
+### b) Múltiplas Consultas (Multiple Queries)
+- Os dados são extraídos em **blocos (páginas)**, com várias consultas ao banco de dados.
+- Cada "página" contém um número limitado de registros (controlado pelo tamanho da busca, o *fetch size*).
+
+#### Vantagens:
+- Ideal para tabelas grandes, pois processa os dados em partes, consumindo menos memória.
+- Reduz o risco de travamentos ou falhas durante a exportação de grandes volumes de dados.
+
+#### Desvantagens:
+- Pode ser mais lenta devido ao maior número de consultas ao banco de dados.
+- Requer um bom ajuste do *fetch size* para evitar *overhead* (excesso de interações).
+
+---
+
+## 2. Tamanho da Busca (Fetch Size)
+O **fetch size** é o número de registros que o DBeaver busca do banco de dados em cada iteração durante a extração.
+
+### Valor baixo:
+- Usa menos memória, pois carrega poucos registros por vez.
+- Indicado para máquinas com menos recursos ou tabelas muito grandes.
+- Pode ser mais lento devido ao aumento no número de consultas.
+
+### Valor alto:
+- Reduz o número de interações com o banco, pois mais registros são carregados em cada iteração.
+- Indicado para máquinas com mais recursos e tabelas médias ou grandes.
+- Pode causar problemas de memória se o valor for muito alto e o volume de dados for grande.
+
+---
+
+## 3. Como escolher?
+### Para tabelas pequenas (alguns milhares de registros):
+- Use **consulta única** com **fetch size** padrão.
+
+### Para tabelas grandes (milhões de registros):
+- Use **múltiplas consultas** e ajuste o **fetch size** (ex.: 1.000 ou 10.000 registros por consulta).
+
+### Se o DBeaver começar a travar ou ficar lento:
+- Reduza o **fetch size** para algo como 500 ou 1.000.
+
+Essas opções permitem balancear memória, desempenho e estabilidade durante a exportação. 🚀
