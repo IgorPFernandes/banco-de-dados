@@ -431,7 +431,7 @@ COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Indiv
 
 --Porém vai dar permissão negada, tentei acessar pelo windows+R o Services.msc e mudar o usuario logon do serviço postgresql17
 --Mas não recomendo vai rodar muito e chegar a nada, procurei em fóruns e vi alguns profissionais falarem que é melhor usar
---Import e export do pgAdmin ou apenas usar aqui do Dbeaver mesmo. (Estou falando isso mais sobre título de informação)
+--Import e export do pgAdmin ou apenas usar aqui do Dbeaver mesmo. (Estou falando isso mais a título de informação)
 
 
 -- 2ª Forma via Dbeaver
