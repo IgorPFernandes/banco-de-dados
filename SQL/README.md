@@ -538,6 +538,7 @@ COPY cliente TO 'C:/Users/igorp/OneDrive/Desktop/Meus Estudos/Aprendizagem Indiv
 
 ## 1. Tipos de Extração
 
+![Tipos](./Imagens/Export3.png)
 
 ### a) Consulta Única (Single Query)
 - Extrai **todos os dados em uma única consulta** ao banco de dados.
