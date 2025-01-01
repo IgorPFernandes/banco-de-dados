@@ -656,7 +656,7 @@ Digamos que você perdeu completamente os dados das tabelas de extrato_banco, cl
 
 ## Verifica os arquivos
 
-![Import3](./Imagens/Import4.png)
+![Import4](./Imagens/Import4.png)
 
 Vocês podem ter percebido antes, mas eu só percebi aqui a besteira que fiz. Porém tem conserto porque fiz um full backup antes de começar a excluir qualquer coisa.
 Aqui temos duas opções:
@@ -666,7 +666,7 @@ Aqui temos duas opções:
 Então eu apaguei os export e recuperei logo as 3 para aprender a recuperar multiplas tabelas.
 
 ```bash
-pg_restore -U igor -d aprendendo -t extrato_banco -t cliente -t cartao_credito "C:\Users\igorp\OneDrive\Desktop\Meus Estudos\Aprendizagem Individual\Banco de Dados\SQL\Backup\backup.dump"
+pg_restore -U igor -d aprendendo -t extrato_banco -t cliente -t cartao_credito "C:\Users\igorp\OneDrive\Desktop\Meus Estudos\Aprendizagem Individual\Banco de Dados\SQL\Backup\primeirobackup.dump"
 ```
 ### Opção 2 Restaurar o banco de dados completo para um limpo e retomar daquele ponto:
 
@@ -683,9 +683,8 @@ Para logo em seguida efetuar o restore:
 ```bash
 pg_restore -U igor -d aprendendo "C:\Users\igorp\OneDrive\Desktop\Meus Estudos\Aprendizagem Individual\Banco de Dados\SQL\Backup\primeirobackup.dump"
 ```
-IMPORTANTE: Lembre de atualizar o banco antes de achar que deu errado! Quando restauramos as tabelas especificas as chaves são afetadas
+IMPORTANTE: Lembre de atualizar o banco antes de achar que deu errado! Quando restauramos as tabelas especificas as chaves podem ser afetadas
 então você vai ter que reatar essa conexão manualmente. O que não aconteceria em um full restore para um banco limpo porque ele iria restaurar o esquema.
-Como eu escolhi a opção um sou obrigado a fazer essa conexão manualmente logo:
 
 Além disso no meu caso percebi que todos os meu dados foram duplicados então vou ter que excluir os dados duplicados.
 ```sql
@@ -747,7 +746,35 @@ ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES public.cliente(id)
 ALTER TABLE public.extrato_banco
 ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credito(id);
 ```
-(É bom pensar bem o metodo de restaurar, muitas vantagens e desvantagens)
+Acho que entendi, será que exportando no formato SQL eu não perderia as chaves ? Vamos testar!
+Eh..Perde do mesmo jeito as chaves.
+Percebi que na verdade só tive esse trabalho de fazer um CTE porque eu não botei um verbose lá no comando e não atualizei,
+devido a isso os dados foram duplicados, caso contrario apenas fazer alter table é bem mais fácil...
 
-AGORA SIM! Vamos continuar com o processo de importação!
+###Vamos continuar com o processo de importação!
 
+![Import5](./Imagens/Import5.png)
+
+Agora só fazer o processo anterior seguindo os passos corretos
+
+```sql
+ALTER TABLE public.cliente
+ADD PRIMARY KEY (id);
+
+ALTER TABLE public.cartao_credito
+ADD PRIMARY KEY (id);
+
+ALTER TABLE public.extrato_banco
+ADD PRIMARY KEY (id);
+
+ALTER TABLE public.extrato_banco
+ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES public.cliente(id);
+
+ALTER TABLE public.cartao_credito
+ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES public.cliente(id);
+
+ALTER TABLE public.extrato_banco
+ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credito(id);
+```
+
+# Tutorial Parte VI - Subqueries
