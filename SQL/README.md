@@ -689,10 +689,65 @@ Como eu escolhi a opção um sou obrigado a fazer essa conexão manualmente logo
 
 Além disso no meu caso percebi que todos os meu dados foram duplicados então vou ter que excluir os dados duplicados.
 ```sql
+SELECT id, COUNT(*)
+FROM public.cliente
+GROUP BY id
+HAVING COUNT(*) > 1; -- Verifica as colunas que tem mais de uma linha
 
+select * from cliente;
 
+WITH duplicatas AS ( -- Não entendi preciso aprender!
+  SELECT MIN(ctid) as ctid, id
+  FROM public.cliente
+  GROUP BY id
+  HAVING COUNT(*) > 1
+)
+DELETE FROM public.cliente
+WHERE ctid NOT IN (SELECT ctid FROM duplicatas);
+
+select * from cliente;
+
+WITH duplicatas AS (
+  SELECT MIN(ctid) AS ctid, numero_cartao
+  FROM public.cartao_credito
+  GROUP BY numero_cartao
+  HAVING COUNT(*) > 1
+)
+DELETE FROM public.cartao_credito
+WHERE ctid NOT IN (SELECT ctid FROM duplicatas);
+
+select * from cartao_credito;
+
+WITH duplicatas AS (
+  SELECT MIN(ctid) AS ctid, cartao_id
+  FROM public.extrato_banco
+  GROUP BY cartao_id
+  HAVING COUNT(*) > 1
+)
+DELETE FROM public.extrato_banco
+WHERE ctid NOT IN (SELECT ctid FROM duplicatas);
+
+select * from extrato_banco;
+
+ALTER TABLE public.cliente
+ADD PRIMARY KEY (id);
+
+ALTER TABLE public.cartao_credito
+ADD PRIMARY KEY (id);
+
+ALTER TABLE public.extrato_banco
+ADD PRIMARY KEY (id);
+
+ALTER TABLE public.extrato_banco
+ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES public.cliente(id);
+
+ALTER TABLE public.cartao_credito
+ADD CONSTRAINT fk_cliente FOREIGN KEY (cliente_id) REFERENCES public.cliente(id);
+
+ALTER TABLE public.extrato_banco
+ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credito(id);
 ```
-
+(É bom pensar bem o metodo de restaurar, muitas vantagens e desvantagens)
 
 AGORA SIM! Vamos continuar com o processo de importação!
 
