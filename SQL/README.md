@@ -907,4 +907,20 @@ join clientes_do_extrato cde on c.id = cde.cliente_id
 join extrato_banco eb on cde.cliente_id = eb.cliente_id
 group by c.id, c.nome;
 
+-- Aprendendo a deletar duplicatas por id:
+
+WITH cte AS ( -- Onde tem cte você pode dar qualquer nome para essa cte
+    SELECT
+        id, -- pelo que li você precisa selecionar id aqui para que possa aplicar na função row_number
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY id) AS rn -- aqui você vai contar linha abaixo de linha (over)
+        -- separando em partições por id e ordenando-as por id, então se em uma partição vc conta 2 id quer dizer que está duplicado
+    FROM cliente
+)
+DELETE FROM cliente
+WHERE id IN (
+    SELECT id
+    FROM cte
+    WHERE rn > 1 -- aqui é justamente onde a gente verifica se a contagem é maior que 1, se for pode deletar
+);
+
 ```
