@@ -751,7 +751,7 @@ Eh..Perde do mesmo jeito as chaves.
 Percebi que na verdade só tive esse trabalho de fazer um CTE porque eu não botei um verbose lá no comando e não atualizei,
 devido a isso os dados foram duplicados, caso contrario apenas fazer alter table é bem mais fácil...
 
-###Vamos continuar com o processo de importação!
+### Vamos continuar com o processo de importação!
 
 ![Import5](./Imagens/Import5.png)
 
