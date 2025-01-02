@@ -855,3 +855,52 @@ WHERE cliente_id IN (
     HAVING SUM(valor_compra) > 50
 ); -- É porque eu não tenho um caso de duplicação nas tabelas que criei.
 ```
+
+```sql
+-- CTE (Common table expressions) são um recurso no SQL que permite criar subconsultas temporárias dentro de uma consulta maior. 
+-- Elas podem ser usadas para tornar o código mais legível, modular e reutilizável, e são especialmente úteis em consultas complexas.
+
+-- Sintaxe básica:
+
+WITH nome_da_cte AS (
+    -- Consulta SQL que define a CTE
+    SELECT coluna1, coluna2 -- Aqui na consulta da CTE pode conter select,join,where,having, etc..
+    FROM tabela
+    WHERE condição
+)
+-- Consulta principal que usa a CTE
+SELECT *
+FROM nome_da_cte
+WHERE outra_condição;
+
+-- As CTEs podem ser reutilizadas várias vezes durante o código.
+
+-- Exemplo, digamos que eu queira encontrar os clientes que já fizeram mais de 2 compras no cartão.
+
+with clientes_do_extrato as (
+	select cliente_id, count(*) as numero_compras
+	from extrato_banco
+	group by cliente_id
+	having count(*) > 2
+)
+select c.id, c.nome
+from cliente c
+join clientes_do_extrato cde on c.id = cde.cliente_id;
+
+
+-- Detalhe que enquanto construia essa consulta eu entendi, a CTE só armazena o que você fez na subconsulta
+-- Não adianta dar um cde.valor_compras, esses valores não vão estar lá.
+
+with clientes_do_extrato as (
+	select cliente_id, count(*) as numero_compras
+	from extrato_banco
+	group by cliente_id
+	having count(*) > 2
+)
+select c.id, c.nome, SUM(eb.valor_compra) as total_gasto
+from cliente c
+join clientes_do_extrato cde on c.id = cde.cliente_id
+join extrato_banco eb on cde.cliente_id = eb.cliente_id
+group by c.id, c.nome;
+
+```
