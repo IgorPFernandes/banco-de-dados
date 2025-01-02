@@ -778,7 +778,7 @@ ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credit
 ```
 
 # Tutorial Parte VI - Subqueries e CTEs
-
+```sql
 -- Uma subquerie executa uma subconsulta dentro de uma query comum que você está realizando, por exemplo:
 
 select e.cliente_id, e.valor_compra,
@@ -854,3 +854,4 @@ WHERE cliente_id IN (
     GROUP BY cliente_id
     HAVING SUM(valor_compra) > 50
 ); -- É porque eu não tenho um caso de duplicação nas tabelas que criei.
+```
