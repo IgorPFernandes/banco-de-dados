@@ -783,7 +783,7 @@ ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credit
 
 -- Perceba que são praticamente a mesma busca, a unica diferença é que uma estou fazendo um join no from para unir as tabelas
 -- ter acesso a ambos os dados e que na segunda consulta eu estou fazendo uma especificação com where, mas se você apaga o where
--- o resultados das consultas são o mesmo.
+-- o resultados das consultas são os mesmos.
 
 select e.cliente_id, e.valor_compra,
        (select c.nome from cliente c where c.id = e.cliente_id) as nome_cliente
