@@ -1,34 +1,50 @@
+# Sumário
+
+- [Tutorial Parte I - Entendendo as Nomenclaturas Iniciais](#tutorial-parte-i---entendendo-as-nomenclaturas-iniciais)
+- [Tutorial Parte II - Tipos de Dados](#tutorial-parte-ii---tipos-de-dados)
+- [Tutorial Parte III - Criação e Relacionamento de Tabelas](#tutorial-parte-iii---criação-e-relacionamento-de-tabelas)
+- [Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas](#tutorial-parte-iv---funções-básicas-de-agregação-trigger-e-consultas)
+- [Tutorial Parte V - Como realizar backup, exportação e importação](#tutorial-parte-v---como-realizar-backup-exportação-e-importação)
+- [Tutorial Parte VI - Subqueries e CTEs](#tutorial-parte-vi---subqueries-e-ctes)
+- [Tutorial Parte VII - Design e Modelagem de Banco de Dados](#tutorial-parte-vii---design-e-modelagem-de-banco-de-dados)
+- [Tutorial Parte VIII - Funções e Procedimentos](#tutorial-parte-viii---funções-e-procedimentos)
+- [Tutorial Parte IX - Controle e Segurança](#tutorial-parte-ix---controle-e-segurança)
+- [Tutorial Parte X - Otimização de Consultas](#tutorial-parte-x---otimização-de-consultas)
+- [Tutorial Parte XI - Trabalhando com Tipos de Dados Avançados](#tutorial-parte-xi---trabalhando-com-tipos-de-dados-avançados)
+- [Tutorial Parte XII - Integração e Automação](#tutorial-parte-xii---integração-e-automação)
+- [Tutorial Parte XIII - Projetos e Estudos de Caso](#tutorial-parte-xiii---projetos-e-estudos-de-caso)
+
 # Tutorial Parte I - Entendendo as Nomenclaturas Iniciais
 
 Neste tutorial, vamos entender as nomenclaturas e conceitos básicos relacionados a banco de dados, postgreSQL e operações comuns em um banco relacional.
 
-### O que é uma **query**?
+## O que é uma **query**?
 
 Uma **query** é uma requisição feita ao banco de dados, geralmente utilizando a linguagem SQL (Structured Query Language). Ela serve para interagir com o banco de dados, seja para buscar dados, modificar informações, inserir ou deletar registros.
 
-#### Tipos de Queries Comuns:
+### Tipos de Queries Comuns:
 - **SELECT**: Utilizado para consultar ou buscar dados de uma tabela.
 - **INSERT**: Usado para adicionar novos registros em uma tabela.
 - **UPDATE**: Para modificar dados já existentes em uma tabela.
 - **DELETE**: Para remover dados de uma tabela.
 
-### O que é uma **tabela**?
+## O que é uma **tabela**?
 
 Uma **tabela** é uma estrutura de dados que organiza informações em linhas (também chamadas de registros ou "tuplas") e colunas (chamadas de campos ou atributos). Cada coluna tem um nome e um tipo de dado específico, e cada linha contém um conjunto de dados relacionados.
 
-### O que é uma **coluna**?
+## O que é uma **coluna**?
 
 Uma **coluna** é um campo de uma tabela, onde os dados são armazenados. Cada coluna tem um nome e um tipo de dado (como `VARCHAR`, `INT`, `DATE`, entre outros) que define o tipo de informações que ela pode armazenar. Por exemplo, uma tabela de usuários pode ter colunas como `id`, `nome`, `email`.
 
-### O que é um **registro**?
+## O que é um **registro**?
 
 Um **registro** (ou **linha**) é um conjunto de dados correspondentes aos campos de uma tabela. Cada linha contém valores para cada coluna. Por exemplo, em uma tabela de usuários, um registro pode conter o nome, e-mail e ID de um usuário específico.
 
-### O que é uma **chave primária (PRIMARY KEY)**?
+## O que é uma **chave primária (PRIMARY KEY)**?
 
 A **chave primária** é uma coluna (ou conjunto de colunas) que identifica de forma única cada registro em uma tabela. Nenhum valor na chave primária pode ser nulo e deve ser único em cada linha da tabela.
 
-### O que é uma **chave estrangeira (FOREIGN KEY)**?
+## O que é uma **chave estrangeira (FOREIGN KEY)**?
 
 Uma **chave estrangeira** é uma coluna em uma tabela que faz referência à chave primária de outra tabela. Ela é usada para estabelecer relacionamentos entre duas tabelas, permitindo que as informações sejam associadas de maneira eficiente.
 
@@ -246,7 +262,7 @@ select * from condominio;
 
 -- Agora repita todos os comandos anteriores de Inner, Left, Right, Full e Cross. Agora você vai entender a diferença!
 ```
-# Tutorial Parte IV - Funções básicas de Agregação e Trigger
+# Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas
 
 ```sql
 -- Vamos criar um novo contexto com novas tabelas para aprender sobre funções básicas de agregação (count,sum,avg,max,min)
@@ -400,8 +416,10 @@ group by c.nome, e.cliente_id;
 select sum(valor_compra) as total_compra 
 from extrato_banco;
 
+
+
 ```
-# Tutorial Parte V - Como realizar backup
+# Tutorial Parte V - Como realizar backup, exportação e importação
 
 ```sql
 
@@ -781,6 +799,10 @@ ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credit
 ```sql
 -- Uma subquerie executa uma subconsulta dentro de uma query comum que você está realizando, por exemplo:
 
+-- Perceba que são praticamente a mesma busca, a unica diferença é que uma estou fazendo um join no from para unir as tabelas
+-- ter acesso a ambos os dados e que na segunda consulta eu estou fazendo uma especificação com where, mas se você apaga o where
+-- o resultados das consultas são os mesmos.
+
 select e.cliente_id, e.valor_compra,
        (select c.nome from cliente c where c.id = e.cliente_id) as nome_cliente
 from extrato_banco e;
@@ -903,4 +925,35 @@ join clientes_do_extrato cde on c.id = cde.cliente_id
 join extrato_banco eb on cde.cliente_id = eb.cliente_id
 group by c.id, c.nome;
 
+-- Aprendendo a deletar duplicatas por id:
+
+WITH cte AS ( -- Onde tem cte você pode dar qualquer nome para essa cte
+    SELECT
+        id, -- pelo que li você precisa selecionar id aqui para que possa aplicar na função row_number
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY id) AS rn -- aqui você vai contar linha abaixo de linha (over)
+        -- separando em partições por id e ordenando-as por id, então se em uma partição vc conta 2 id quer dizer que está duplicado
+    FROM cliente
+)
+DELETE FROM cliente
+WHERE id IN (
+    SELECT id
+    FROM cte
+    WHERE rn > 1 -- aqui é justamente onde a gente verifica se a contagem é maior que 1, se for pode deletar
+);
+
 ```
+# Tutorial Parte VII Design e Modelagem de Banco de Dados
+
+# Tutorial Parte VIII Funções e Procedimentos
+
+# Tutorial Parte IX Controle e Segurança
+
+# Tutorial Parte X Otimização de Consultas
+
+# Tutorial Parte XI Trabalhando com Tipos de Dados Avançados
+
+# Tutorial Parte XII Integração e Automação
+
+# Tutorial Parte XIII Projetos e Estudos de Caso
+
+# Tutorial Parte XIV
