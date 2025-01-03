@@ -926,5 +926,5 @@ WHERE id IN (
 );
 
 ```
-# Tutorial Parte VII 
+# Tutorial Parte VII Design e Modelagem de Banco de Dados
 
