@@ -928,3 +928,16 @@ WHERE id IN (
 ```
 # Tutorial Parte VII Design e Modelagem de Banco de Dados
 
+# Tutorial Parte VIII Funções e Procedimentos
+
+# Tutorial Parte IX Controle e Segurança
+
+# Tutorial Parte X Otimização de Consultas
+
+# Tutorial Parte XI Trabalhando com Tipos de Dados Avançados
+
+# Tutorial Parte XII Integração e Automação
+
+# Tutorial Parte XIII Projetos e Estudos de Caso
+
+# Tutorial Parte XIV
