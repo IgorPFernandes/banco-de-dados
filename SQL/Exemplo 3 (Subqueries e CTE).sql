@@ -1,5 +1,9 @@
 -- Uma subquerie executa uma subconsulta dentro de uma querie comum que você está realizando por exemplo:
 
+-- Perceba que são praticamente a mesma busca, a unica diferença é que uma estou fazendo um join no from para unir as tabelas
+-- ter acesso a ambos os dados e que na segunda consulta eu estou fazendo uma especificação com where, mas se você apaga o where
+-- o resultados das consultas são o mesmo.
+
 select e.cliente_id, e.valor_compra,
        (select c.nome from cliente c where c.id = e.cliente_id) as nome_cliente
 from extrato_banco e;
@@ -73,3 +77,73 @@ WHERE cliente_id IN (
     GROUP BY cliente_id
     HAVING SUM(valor_compra) > 50
 ); -- É porque eu não tenho um caso de duplicação nas tabelas que criei.
+
+-- CTE (Common table expressions) são um recurso no SQL que permite criar subconsultas temporárias dentro de uma consulta maior. 
+-- Elas podem ser usadas para tornar o código mais legível, modular e reutilizável, e são especialmente úteis em consultas complexas.
+
+-- Sintaxe básica:
+
+WITH nome_da_cte AS (
+    -- Consulta SQL que define a CTE
+    SELECT coluna1, coluna2 -- Aqui na consulta da CTE pode conter select,join,where,having, etc..
+    FROM tabela
+    WHERE condição
+)
+-- Consulta principal que usa a CTE
+SELECT *
+FROM nome_da_cte
+WHERE outra_condição;
+
+-- As CTEs podem ser reutilizadas várias vezes durante o código.
+
+-- Exemplo, digamos que eu queira encontrar os clientes que já fizeram mais de 2 compras no cartão.
+
+with clientes_do_extrato as (
+	select cliente_id, count(*) as numero_compras
+	from extrato_banco
+	group by cliente_id
+	having count(*) > 2
+)
+select c.id, c.nome
+from cliente c
+join clientes_do_extrato cde on c.id = cde.cliente_id;
+
+
+-- Detalhe que enquanto construia essa consulta eu entendi, a CTE só armazena o que você fez na subconsulta
+-- Não adianta dar um cde.valor_compras, esses valores não vão estar lá.
+
+with clientes_do_extrato as (
+	select cliente_id, count(*) as numero_compras
+	from extrato_banco
+	group by cliente_id
+	having count(*) > 2
+)
+select c.id, c.nome, SUM(eb.valor_compra) as total_gasto
+from cliente c
+join clientes_do_extrato cde on c.id = cde.cliente_id
+join extrato_banco eb on cde.cliente_id = eb.cliente_id
+group by c.id, c.nome;
+
+select e.cliente_id,c.nome, sum(e.valor_compra) as total_gasto
+from extrato_banco e
+join cliente c on c.id = e.cliente_id
+where e.cliente_id = 1
+group by cliente_id, c.nome;
+
+-- Aprendendo a deletar duplicatas:
+
+WITH cte AS ( -- Onde tem cte você pode dar qualquer nome para essa cte
+    SELECT
+        id, -- pelo que li você precisa selecionar id aqui para que possa aplicar na função row_number
+        ROW_NUMBER() OVER (PARTITION BY id ORDER BY id) AS rn -- aqui você vai contar linha abaixo de linha (over)
+        -- separando em partições por id e ordenando-as por id, então se em uma partição vc conta 2 id quer dizer que está duplicado
+    FROM cliente
+)
+DELETE FROM cliente
+WHERE id IN (
+    SELECT id
+    FROM cte
+    WHERE rn > 1 -- aqui é justamente onde a gente verifica se a contagem é maior que 1, se for pode deletar
+);
+
+select * from cliente;
