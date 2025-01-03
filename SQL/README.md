@@ -246,7 +246,7 @@ select * from condominio;
 
 -- Agora repita todos os comandos anteriores de Inner, Left, Right, Full e Cross. Agora você vai entender a diferença!
 ```
-# Tutorial Parte IV - Funções básicas de Agregação e Trigger
+# Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas
 
 ```sql
 -- Vamos criar um novo contexto com novas tabelas para aprender sobre funções básicas de agregação (count,sum,avg,max,min)
@@ -400,8 +400,10 @@ group by c.nome, e.cliente_id;
 select sum(valor_compra) as total_compra 
 from extrato_banco;
 
+
+
 ```
-# Tutorial Parte V - Como realizar backup
+# Tutorial Parte V - Como realizar backup, exportação e importação
 
 ```sql
 
@@ -924,3 +926,5 @@ WHERE id IN (
 );
 
 ```
+# Tutorial Parte VII 
+
