@@ -1,4 +1,4 @@
-## Sumário
+# Sumário
 
 - [Tutorial Parte I - Entendendo as Nomenclaturas Iniciais](#tutorial-parte-i---entendendo-as-nomenclaturas-iniciais)
 - [Tutorial Parte II - Tipos de Dados](#tutorial-parte-ii---tipos-de-dados)
