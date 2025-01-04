@@ -11,7 +11,7 @@ Aqui, vou explorar diversos tipos de bancos de dados e suas funcionalidades, com
 
 - **PostgreSQL** (Aprendendo)
   
-Para cada banco de dados, você encontrará explicações sobre como configurar, manipular dados, realizar consultas e otimizar o desempenho de consultas, além de exemplos práticos.
+Para cada banco de dados, você encontrará explicações sobre como manipular dados, realizar consultas e otimizar o desempenho de consultas, além de exemplos práticos.
 
 ### O Que Você Vai Aprender
 - Criação de bancos de dados e tabelas
