@@ -551,7 +551,7 @@ select nome, case when cidade = 'São Paulo' then 'Mora' else 'Não Mora' end as
 -- Agora digamos que você quer recuperar alguns dados de uma tabela que lhe foi entrege e está faltando muita coisa!
 select nome,coalesce (email, 'Não informado') from clientes; -- Perceba a última cliente que eu inseri o email era nulo
 
--- Pedi para o chat GPT gerar uns desafios para mim:
+-- Pedi para o chat GPT gerar alguns desafios:
 
 -- Primeiro: Mostre a quantidade total de pedidos para cada cliente e ordene o resultado por quantidade de pedidos em ordem decrescente.
 
