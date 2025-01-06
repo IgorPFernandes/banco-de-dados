@@ -1167,6 +1167,36 @@ WHERE id IN (
 
 O modelo físico de um banco de dados envolve a organização dos dados no disco e a maneira como eles são acessados. O PostgreSQL oferece diversos tipos de índices que podem ser usados para melhorar a performance das consultas.
 
+###Tipos de Índices no PostgreSQL:
+
+B-tree (padrão): O tipo de índice mais comum e utilizado no PostgreSQL. Ele é ideal para consultas de igualdade e intervalos. Por exemplo:
+
+```sql
+CREATE INDEX idx_nome ON clientes (nome);
+```
+Hash Index: Usado para comparações de igualdade exata, mas geralmente não é recomendado em PostgreSQL, pois o B-tree pode ser mais eficiente.
+```sql
+CREATE INDEX idx_hash_nome ON clientes USING HASH (nome);
+```
+GIN (Generalized Inverted Index): Usado para buscar dados em tipos de dados como JSONB, arrays ou textos completos. Ideal para consultas em grandes conjuntos de dados, como quando você faz buscas por palavras-chave.
+```sql
+CREATE INDEX idx_gin_json ON clientes USING GIN (json_column);
+```
+GiST (Generalized Search Tree): Usado para dados como pontos geográficos (tipicamente quando se trabalha com dados espaciais), pode ser usado para índices de aproximação.
+```sql
+CREATE INDEX idx_gist_geom ON geolocations USING GiST (location);
+```
+Índices Compostos:
+Você também pode criar índices em várias colunas para melhorar o desempenho de consultas que envolvem múltiplos campos:
+```sql
+CREATE INDEX idx_composto_cliente_nome ON clientes (cliente_id, nome);
+```
+Índices Parciais:
+Índices que são criados para uma subconjunto específico de dados, melhorando a performance quando se faz consultas com condições específicas.
+```sql
+CREATE INDEX idx_nome_ativos ON clientes (nome) WHERE status = 'ativo';
+```
+
 # Tutorial Parte VIII Funções e Procedimentos
 
 # Tutorial Parte IX Controle e Segurança
