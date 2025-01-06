@@ -1361,6 +1361,37 @@ Pode ficar desatualizada se não for refrescada regularmente.
 
 # Tutorial Parte VIII - Funções e Procedimentos
 
+### Criação de Funções no PostgreSQL
+
+Funções no PostgreSQL são blocos de código que executam operações específicas e podem retornar um valor ou realizar uma ação.
+
+Sintaxe básica:
+
+```sql
+CREATE FUNCTION nome_da_funcao(parâmetros) 
+RETURNS tipo_de_retorno AS $$
+DECLARE
+    -- Declaração de variáveis locais
+BEGIN
+    -- Corpo da função (lógica)
+    RETURN valor_de_retorno;
+END;
+$$ LANGUAGE plpgsql;
+```
+Exemplo simples: Uma função que soma dois números:
+```sql
+CREATE FUNCTION somar(a INT, b INT) 
+RETURNS INT AS $$
+BEGIN
+    RETURN a + b;
+END;
+$$ LANGUAGE plpgsql;
+```
+Para chamar a função:
+```sql
+SELECT somar(5, 3);
+```
+
 # Tutorial Parte IX Controle e Segurança
 
 # Tutorial Parte X Otimização de Consultas
