@@ -1198,6 +1198,167 @@ CREATE INDEX idx_composto_cliente_nome ON clientes (cliente_id, nome);
 CREATE INDEX idx_nome_ativos ON clientes (nome) WHERE status = 'ativo';
 ```
 
+### Exemplo Prático
+Considere uma tabela clientes com milhões de registros. Sem índice, para encontrar um cliente por email, o PostgreSQL precisa verificar todos os registros da tabela. Se você tem um índice na coluna email, ele pode buscar diretamente no índice, que é muito mais rápido. O desempenho se torna notavelmente melhor à medida que os dados crescem. Pode parecer redundante, mas pelo que eu entendi a vantagem de usar está em grandes bancos de dados. Em testes práticos onde criamos uma tabela de 10 clientes, declarar um índice para fazer uma busca como:
+
+```sql
+SELECT * FROM clientes
+WHERE email = 'exemplo@dominio.com';
+```
+
+Vai funcionar rapidamente independente de você ter criado o índice ou não, a vantagem de usar está na velocidade que essa informação chega até você.
+
+### Removendo Índice
+
+Exemplo:
+```sql
+DROP INDEX idx_clientes_email;
+```
+### Tipos de Dados Avançados
+
+O PostgreSQL oferece tipos de dados avançados que o tornam um banco de dados poderoso e flexível.
+
+JSON/JSONB: Para armazenar e consultar dados semi-estruturados. O tipo JSONB é armazenado de maneira binária e é mais eficiente para buscas.
+```sql
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    detalhes JSONB
+);
+```
+Consulta:
+```sql
+SELECT * FROM produtos WHERE detalhes->>'cor' = 'vermelho';
+```
+Por que JSON/JSONB são chamados de semi-estruturados ?
+Porque em sua definição, os dados contidos no formato JSON/JSONB não seguem um modelo rígido
+com a mesma quantidade de campos ou tipo de dados em todos os registros.
+
+Você pode pensar no JSON como uma Struct em C só que diferente da Struct o Json não é tipado
+,ou seja você não precisa definir um tipo de dado para o que está sendo armazenado.
+
+UUID: Usado para identificadores únicos, em vez de chaves numéricas sequenciais.
+```sql
+CREATE TABLE usuarios (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nome VARCHAR(100)
+);
+```
+Aqui, a função gen_random_uuid() (que pode ser fornecida pela extensão pgcrypto no PostgreSQL)
+gera um UUID aleatório para cada novo registro. O valor é único e não segue uma sequência.
+
+Quando Usar UUIDs?
+
+Você pode optar por UUIDs em casos em que a unicidade global e a segurança sejam mais importantes do que a eficiência de armazenamento e desempenho. Exemplos incluem:
+
+Sistemas distribuídos: Onde os dados precisam ser sincronizados entre diferentes bancos de dados em diferentes servidores.
+APIs públicas: Onde os identificadores precisam ser únicos e difíceis de adivinhar (melhor para segurança).
+Aplicações móveis: Onde os dados podem ser gerados localmente no dispositivo e depois sincronizados com o banco de dados central.
+
+Arrays: PostgreSQL suporta arrays de qualquer tipo de dado, tornando-o flexível para armazenar coleções de dados.
+```sql
+CREATE TABLE alunos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    notas INT[]
+);
+```
+Tipos Personalizados (Custom Types): O PostgreSQL permite que você crie seus próprios tipos de dados.
+```sql
+CREATE TYPE estado AS ENUM ('AC', 'AL', 'AM', 'BA');
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    estado estado
+);
+```
+O tipo ENUM em PostgreSQL é usado para representar uma lista de valores possíveis, ou seja, ele restringe os valores que uma coluna pode assumir para um conjunto específico.
+
+No caso, você está criando um tipo estado que só pode ter um dos seguintes valores:
+
+'AC' (Acre)
+'AL' (Alagoas)
+'AM' (Amazonas)
+'BA' (Bahia)
+
+Podemos declarar algo como uma estrutura:
+
+```sql
+CREATE TYPE endereco AS (
+    rua VARCHAR(100),
+    numero INT,
+    cidade VARCHAR(50),
+    cep VARCHAR(10)
+);
+
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    endereco endereco
+);
+```
+
+### Views e Materialized Views
+
+#### Views:
+
+As views são consultas SQL armazenadas no banco de dados. Elas não armazenam os dados fisicamente, 
+mas são uma forma prática de acessar dados de forma organizada, podendo simplificar consultas complexas.
+
+Exemplo de criação de view:
+
+```sql
+CREATE VIEW clientes_ativos AS
+SELECT cliente_id, nome
+FROM clientes
+WHERE status = 'ativo';
+```
+Uso: As views são frequentemente usadas para encapsular lógica de consulta e apresentar resultados de maneira organizada.
+Você pode consultar uma view como se fosse uma tabela:
+
+```sql
+SELECT * FROM clientes_ativos;
+```
+Vantagens:
+
+Encapsulamento de lógica de consulta.
+Simplificação de operações repetitivas.
+
+Desvantagens:
+
+Como não armazena dados, a performance pode ser afetada se a consulta subjacente for complexa.
+
+#### Materialized Views:
+
+As materialized views armazenam fisicamente os dados da consulta, tornando as consultas subsequentes mais rápidas,
+já que não precisam ser recalculadas toda vez.
+
+Exemplo de criação de materialized view:
+
+```sql
+CREATE MATERIALIZED VIEW mv_clientes_ativos AS
+SELECT cliente_id, nome
+FROM clientes
+WHERE status = 'ativo';
+```
+
+Uso: As materialized views são ideais quando você tem consultas pesadas que não precisam ser atualizadas constantemente.
+Elas podem ser atualizadas manualmente ou automaticamente.
+
+Atualização: Para atualizar os dados em uma materialized view, você pode usar:
+
+```sql
+REFRESH MATERIALIZED VIEW mv_clientes_ativos;
+```
+Vantagens:
+
+Melhora a performance de consultas complexas, pois armazena os dados.
+Pode ser atualizada periodicamente para refletir os dados mais recentes.
+
+Desvantagens:
+
+Armazenamento físico é necessário.
+Pode ficar desatualizada se não for refrescada regularmente.
+
 # Tutorial Parte VIII Funções e Procedimentos
 
 # Tutorial Parte IX Controle e Segurança
