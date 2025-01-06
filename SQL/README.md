@@ -1359,7 +1359,7 @@ Desvantagens:
 Armazenamento físico é necessário.
 Pode ficar desatualizada se não for refrescada regularmente.
 
-# Tutorial Parte VIII Funções e Procedimentos
+# Tutorial Parte VIII - Funções e Procedimentos
 
 # Tutorial Parte IX Controle e Segurança
 
