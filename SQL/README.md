@@ -1419,6 +1419,26 @@ Para chamar a função:
 ```sql
 SELECT somar(5, 3);
 ```
+```sql
+-- Fazendo uma função sozinho utilizando funções de agregação
+
+create function retorna_valor (id_param int)
+returns table (nome varchar, soma_valores decimal(10,2)) as $$
+begin
+	return query
+	select c.nome, sum(e.valor_compra)
+	from extrato_banco e
+	left join cliente c on e.cliente_id = c.id
+	where e.cliente_id = id_param
+	group by c.nome;
+end;
+$$ language plpgsql;
+
+select * from retorna_valor(2); -- Criei uma função que retorna o valor gasto no extrato, exatamente do id que eu enviar
+-- realmente faz sentido quando você utiliza várias e várias vezes.
+
+DROP FUNCTION retorna_valor;
+```
 
 # Tutorial Parte IX Controle e Segurança
 
