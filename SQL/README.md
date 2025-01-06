@@ -113,7 +113,7 @@ Por exemplo:
 
 Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garantindo consistência e desempenho no banco de dados.
 
-# Tutorial Parte III - Commandos,Criação e Relacionamento de Tabelas
+# Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas
 
 ### Categorias de Comandos:
 
