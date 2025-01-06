@@ -1168,7 +1168,7 @@ WHERE id IN (
 
 O modelo físico de um banco de dados envolve a organização dos dados no disco e a maneira como eles são acessados. O PostgreSQL oferece diversos tipos de índices que podem ser usados para melhorar a performance das consultas.
 
-###Tipos de Índices no PostgreSQL:
+### Tipos de Índices no PostgreSQL:
 
 B-tree (padrão): O tipo de índice mais comum e utilizado no PostgreSQL. Ele é ideal para consultas de igualdade e intervalos. Por exemplo:
 
