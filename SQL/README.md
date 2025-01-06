@@ -2,11 +2,11 @@
 
 - [Tutorial Parte I - Entendendo as Nomenclaturas Iniciais](#tutorial-parte-i---entendendo-as-nomenclaturas-iniciais)
 - [Tutorial Parte II - Tipos de Dados](#tutorial-parte-ii---tipos-de-dados)
-- [Tutorial Parte III - Criação e Relacionamento de Tabelas](#tutorial-parte-iii---criação-e-relacionamento-de-tabelas)
+- [Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas](#tutorial-parte-iii---comandos-criação-e-relacionamento-de-tabelas)
 - [Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas](#tutorial-parte-iv---funções-básicas-de-agregação-trigger-e-consultas)
 - [Tutorial Parte V - Como realizar backup, exportação e importação](#tutorial-parte-v---como-realizar-backup-exportação-e-importação)
 - [Tutorial Parte VI - Subqueries e CTEs](#tutorial-parte-vi---subqueries-e-ctes)
-- [Tutorial Parte VII - Design e Modelagem de Banco de Dados](#tutorial-parte-vii---design-e-modelagem-de-banco-de-dados)
+- [Tutorial Parte VII - Índices, Tipos de Dados Avançados e Views](#tutorial-parte-vii-índices-tipos-de-dados-avançados-e-views)
 - [Tutorial Parte VIII - Funções e Procedimentos](#tutorial-parte-viii---funções-e-procedimentos)
 - [Tutorial Parte IX - Controle e Segurança](#tutorial-parte-ix---controle-e-segurança)
 - [Tutorial Parte X - Otimização de Consultas](#tutorial-parte-x---otimização-de-consultas)
@@ -113,7 +113,35 @@ Por exemplo:
 
 Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garantindo consistência e desempenho no banco de dados.
 
-# Tutorial Parte III - Criação e Relacionamento de Tabelas
+# Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas
+
+### Categorias de Comandos:
+
+#### DDL (Data Definition Language)
+
+Comandos DDL são usados para definir e modificar a estrutura do banco de dados. Eles alteram o esquema do banco de dados e geralmente afetam a forma como os dados são armazenados. Alguns comandos DDL incluem:
+
+CREATE: Cria um novo banco de dados, tabela, índice, ou outra estrutura de dados.
+
+ALTER: Modifica a estrutura de uma tabela existente, como adicionar, alterar ou excluir colunas.
+
+DROP: Exclui um banco de dados, tabela ou outro objeto do banco de dados.
+
+TRUNCATE: Remove todos os dados de uma tabela, mas mantém a estrutura da tabela.
+
+RENAME: Altera o nome de um objeto no banco de dados.
+
+#### DML (Data Manipulation Language)
+
+Comandos DML são usados para manipular os dados dentro das tabelas de um banco de dados. Eles não alteram a estrutura do banco de dados, mas permitem que você faça operações com os dados armazenados. Alguns comandos DML incluem:
+
+SELECT: Recupera dados de uma ou mais tabelas.
+
+INSERT: Adiciona novos dados em uma tabela.
+
+UPDATE: Modifica dados existentes em uma tabela.
+
+DELETE: Remove dados de uma tabela.
 
 ```sql
 
@@ -416,6 +444,225 @@ group by c.nome, e.cliente_id;
 select sum(valor_compra) as total_compra 
 from extrato_banco;
 
+-- A consulta mais básica já venho utilizando desde o inicio do tutorial o famoso select.
+
+select * from cliente;
+
+-- Agora vamos pegar algumas tabelas para treinar as diversas formas de consultas
+
+CREATE TABLE clientes (
+    cliente_id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    email VARCHAR(100),
+    cidade VARCHAR(50)
+);
+
+-- Inserções com nomes duplicados
+
+INSERT INTO clientes (nome, email, cidade) VALUES
+('João Silva', 'joao.silva@email.com', 'São Paulo'),
+('Maria Oliveira', 'maria.oliveira@email.com', 'Rio de Janeiro'),
+('João Silva', 'joao.silva2@email.com', 'São Paulo'),
+('Carlos Pereira', 'carlos.pereira@email.com', 'Salvador'),
+('Maria Oliveira', 'maria.oliveira2@email.com', 'Rio de Janeiro'),
+('Ana Costa', 'ana.costa@email.com', 'São Paulo'),
+('Pedro Souza', 'pedro.souza@email.com', 'Belo Horizonte'),
+('Carlos Pereira', 'carlos.pereira2@email.com', 'Salvador');
+
+-- Esse insert aconteceu depois porque achei poucos clientes
+
+INSERT INTO clientes (nome, email, cidade) VALUES
+('Lucas Almeida', 'lucas.almeida@email.com', 'Curitiba'),
+('Fernanda Silva', 'fernanda.silva@email.com', 'Porto Alegre'),
+('Rafael Santos', 'rafael.santos@email.com', 'Recife'),
+('Juliana Costa', 'juliana.costa@email.com', 'Fortaleza'),
+('Eduardo Lima', 'eduardo.lima@email.com', 'Salvador'),
+('Tatiane Rocha', 'tatiane.rocha@email.com', 'Goiânia'),
+('Carlos Souza', 'carlos.souza@email.com', 'Brasília'),
+('Beatriz Martins', 'beatriz.martins@email.com', 'São Paulo'),
+('Gustavo Oliveira', 'gustavo.oliveira@email.com', 'Rio de Janeiro'),
+('Patrícia Pereira', 'patricia.pereira@email.com', 'Belo Horizonte');
+
+insert into clientes (nome,email,cidade) values
+('João Costa', 'joao.costa@email.com', 'Brasília');
+
+insert into clientes (nome,email,cidade) values
+('Patrícia Lima', null, 'Natal');
+
+select * from clientes;
+
+CREATE TABLE pedidos (
+    pedido_id SERIAL PRIMARY KEY,
+    cliente_id INT,
+    data_pedido DATE,
+    valor_total DECIMAL(10, 2),
+    FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id)
+);
+
+INSERT INTO pedidos (cliente_id, data_pedido, valor_total) VALUES
+(1, '2025-01-01', 150.50),
+(2, '2025-01-02', 200.75),
+(3, '2025-01-03', 120.30),
+(1, '2025-01-04', 220.10),
+(4, '2025-01-02', 100.00),
+(5, '2025-01-01', 180.40),
+(2, '2025-01-03', 210.00);
+
+select * from pedidos;
+
+CREATE TABLE produtos (
+    produto_id SERIAL PRIMARY KEY,
+    nome_produto VARCHAR(100),
+    preco DECIMAL(10, 2)
+);
+
+INSERT INTO produtos (nome_produto, preco) VALUES
+('Produto A', 50.00),
+('Produto B', 75.00),
+('Produto C', 40.00),
+('Produto D', 120.00),
+('Produto E', 60.00);
+
+select * from produtos;
+
+CREATE TABLE itens_pedido (
+    item_id SERIAL PRIMARY KEY,
+    pedido_id INT,
+    produto_id INT,
+    quantidade INT,
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(pedido_id) ON DELETE CASCADE,
+    FOREIGN KEY (produto_id) REFERENCES produtos(produto_id)
+);
+
+INSERT INTO itens_pedido (pedido_id, produto_id, quantidade) VALUES
+(1, 1, 2),
+(1, 3, 1),
+(2, 2, 3),
+(3, 4, 1),
+(4, 1, 1),
+(5, 5, 2),
+(6, 3, 1),
+(7, 2, 4);
+
+select * from itens_pedido;
+
+-- Aqui vão haver algumas repetições mas eu achei uma boa oportunidade para treinar
+-- Vamos começar
+
+select nome,cidade from clientes where cidade = 'São Paulo'; -- Procurando especificamente por uma cidade
+
+select nome,email from clientes where nome = 'Ana Costa'; -- Procurando especificamente por um nome
+
+select nome,email from clientes where nome like 'João%'; -- A % indica que queremos um João, mas não importa o que vem depois
+
+select nome,cidade from clientes order by cliente_id limit 10; -- O número após o limit vai repassar justamente o numero que você quer
+
+select nome, cidade from clientes order by cliente_id limit 10 offset 5; -- O offset é o ponto de partida que você quer
+
+select cidade, count(*) from clientes group by cidade; -- Todas as cidades
+
+select cidade, count(*) from clientes where cidade = 'Salvador' group by cidade; -- Achei bem otimizado dessa forma
+
+SELECT 'Salvador' AS cidade, COUNT(*) FROM clientes WHERE cidade = 'Salvador'; -- Essa foi sugerida pelo chat gpt
+
+update clientes set email = 'aninhagameplays@gmail.com' where nome = 'Ana Costa';
+
+select nome,email from clientes where nome = 'Ana Costa'; -- Use para conferir
+
+delete from clientes where cidade = 'Curitiba'; -- Deletar clientes de uma cidade que não opera mais
+
+select cidade, count(*) from clientes where cidade = 'Curitiba' group by cidade; -- Conferindo
+
+-- Criando uma coluna temporaria que repassa uma informação desejada
+select nome, case when cidade = 'São Paulo' then 'Mora' else 'Não Mora' end as reside from clientes;
+
+-- Agora digamos que você quer recuperar alguns dados de uma tabela que lhe foi entrege e está faltando muita coisa!
+select nome,coalesce (email, 'Não informado') from clientes; -- Perceba a última cliente que eu inseri o email era nulo
+
+-- Pedi para o chat GPT gerar alguns desafios:
+
+-- Primeiro: Mostre a quantidade total de pedidos para cada cliente e ordene o resultado por quantidade de pedidos em ordem decrescente.
+
+
+-- Acho que não dá para fazer sem retirar as duplicatas
+
+with delduplicatas as (
+	select cliente_id,nome,email,cidade, row_number() over (partition by nome, email, cidade order by cliente_id) as rn
+	from clientes
+)
+delete from clientes
+where cliente_id in (select cliente_id from delduplicatas where rn>1);
+
+select * from clientes;
+
+
+-- Percebi que não são duplicatas pq o e-mail está diferente, ou seja, poderiam ser apenas duas pessoas com nomes iguais que moram na mesma cidade
+-- Erro meu, mas pelomenos fazendo o código com o intuito certo não perdi nenhum dado.
+
+select distinct c.nome, count(*) as qnt_pedidos
+from pedidos p
+join clientes c on p.cliente_id = c.cliente_id
+group by c.nome, c.cliente_id
+order by qnt_pedidos desc, c.nome asc;
+
+
+-- Segundo: Atualize o email dos clientes de Salvador para salvador@novoemail.com, mas somente para os clientes que não possuem email.
+
+-- Não possuo clientes que não possui e-mail mas vamos fazer um insert
+
+insert into clientes(nome,email,cidade) values
+('Zezin',null,'Salvador');
+
+update clientes set email = 'salvador@novoemail.com' where email is null;
+
+-- Terceiro: Exclua todos os clientes que não realizaram pedidos.
+
+delete from clientes c
+where cliente_id not in (select cliente_id from pedidos);
+
+-- Ou
+
+DELETE FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 FROM pedidos p WHERE p.cliente_id = c.cliente_id
+);
+
+--verificar
+
+select c.nome
+from clientes c
+left join pedidos p on c.cliente_id = p.cliente_id
+where p.cliente_id is null; -- Se você substituir is null por is not null você consegue comparar com
+
+select * from clientes; -- Esse select e entender que deu certo, só ficaram os clientes com pedidos
+
+-- Quarto: Mostre os clientes que realizaram pedidos de produtos mais caros que 100 reais.
+
+select c.nome, p.valor_total
+from clientes c
+left join pedidos p on c.cliente_id = p.cliente_id
+where p.valor_total > 100.00;
+
+-- Quinto: Mostre o nome do produto e a quantidade total vendida de cada produto (considerando os itens de pedidos), ordenando pelo produto com maior quantidade vendida.
+
+select p.nome_produto, ped.quantidade
+from produtos p
+left join itens_pedido ped on p.produto_id = ped.produto_id
+order by ped.quantidade desc, nome_produto asc;
+
+-- Sexto: Encontre os clientes que realizaram mais de 2 pedidos.
+
+select distinct c.nome, count(*) as qnt_pedidos
+from pedidos p
+join clientes c on p.cliente_id = c.cliente_id
+group by c.nome, c.cliente_id
+having count(*) > 2; -- O having é usado pós função de agregação, então se você tem um count,sum e quer tratar esse valor usa o having.
+
+-- Sétimo: Mostre os 10 clientes mais recentes (com base no ID de cliente) e suas cidades, usando ORDER BY e LIMIT.
+
+select nome, cliente_id
+from clientes
+order by cliente_id desc limit 10;
 
 
 ```
@@ -942,9 +1189,256 @@ WHERE id IN (
 );
 
 ```
-# Tutorial Parte VII Design e Modelagem de Banco de Dados
 
-# Tutorial Parte VIII Funções e Procedimentos
+# Tutorial Parte VII Índices, Tipos de Dados Avançados e Views
+
+## Modelo Físico e Tipos de Índices no PostgreSQL
+
+O modelo físico de um banco de dados envolve a organização dos dados no disco e a maneira como eles são acessados. O PostgreSQL oferece diversos tipos de índices que podem ser usados para melhorar a performance das consultas.
+
+### Tipos de Índices no PostgreSQL:
+
+B-tree (padrão): O tipo de índice mais comum e utilizado no PostgreSQL. Ele é ideal para consultas de igualdade e intervalos. Por exemplo:
+
+```sql
+CREATE INDEX idx_nome ON clientes (nome);
+```
+Hash Index: Usado para comparações de igualdade exata, mas geralmente não é recomendado em PostgreSQL, pois o B-tree pode ser mais eficiente.
+```sql
+CREATE INDEX idx_hash_nome ON clientes USING HASH (nome);
+```
+GIN (Generalized Inverted Index): Usado para buscar dados em tipos de dados como JSONB, arrays ou textos completos. Ideal para consultas em grandes conjuntos de dados, como quando você faz buscas por palavras-chave.
+```sql
+CREATE INDEX idx_gin_json ON clientes USING GIN (json_column);
+```
+GiST (Generalized Search Tree): Usado para dados como pontos geográficos (tipicamente quando se trabalha com dados espaciais), pode ser usado para índices de aproximação.
+```sql
+CREATE INDEX idx_gist_geom ON geolocations USING GiST (location);
+```
+Índices Compostos:
+Você também pode criar índices em várias colunas para melhorar o desempenho de consultas que envolvem múltiplos campos:
+```sql
+CREATE INDEX idx_composto_cliente_nome ON clientes (cliente_id, nome);
+```
+Índices Parciais:
+Índices que são criados para uma subconjunto específico de dados, melhorando a performance quando se faz consultas com condições específicas.
+```sql
+CREATE INDEX idx_nome_ativos ON clientes (nome) WHERE status = 'ativo';
+```
+
+### Exemplo Prático
+Considere uma tabela clientes com milhões de registros. Sem índice, para encontrar um cliente por email, o PostgreSQL precisa verificar todos os registros da tabela. Se você tem um índice na coluna email, ele pode buscar diretamente no índice, que é muito mais rápido. O desempenho se torna notavelmente melhor à medida que os dados crescem. Pode parecer redundante, mas pelo que eu entendi a vantagem de usar está em grandes bancos de dados. Em testes práticos onde criamos uma tabela de 10 clientes, declarar um índice para fazer uma busca como:
+
+```sql
+SELECT * FROM clientes
+WHERE email = 'exemplo@dominio.com';
+```
+
+Vai funcionar rapidamente independente de você ter criado o índice ou não, a vantagem de usar está na velocidade que essa informação chega até você.
+
+### Removendo Índice
+
+Exemplo:
+```sql
+DROP INDEX idx_clientes_email;
+```
+### Tipos de Dados Avançados
+
+O PostgreSQL oferece tipos de dados avançados que o tornam um banco de dados poderoso e flexível.
+
+JSON/JSONB: Para armazenar e consultar dados semi-estruturados. O tipo JSONB é armazenado de maneira binária e é mais eficiente para buscas.
+```sql
+CREATE TABLE produtos (
+    id SERIAL PRIMARY KEY,
+    detalhes JSONB
+);
+```
+Consulta:
+```sql
+SELECT * FROM produtos WHERE detalhes->>'cor' = 'vermelho';
+```
+Por que JSON/JSONB são chamados de semi-estruturados ?
+Porque em sua definição, os dados contidos no formato JSON/JSONB não seguem um modelo rígido
+com a mesma quantidade de campos ou tipo de dados em todos os registros.
+
+Você pode pensar no JSON como uma Struct em C só que diferente da Struct o Json não é tipado
+,ou seja você não precisa definir um tipo de dado para o que está sendo armazenado.
+
+UUID: Usado para identificadores únicos, em vez de chaves numéricas sequenciais.
+```sql
+CREATE TABLE usuarios (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nome VARCHAR(100)
+);
+```
+Aqui, a função gen_random_uuid() (que pode ser fornecida pela extensão pgcrypto no PostgreSQL)
+gera um UUID aleatório para cada novo registro. O valor é único e não segue uma sequência.
+
+Quando Usar UUIDs?
+
+Você pode optar por UUIDs em casos em que a unicidade global e a segurança sejam mais importantes do que a eficiência de armazenamento e desempenho. Exemplos incluem:
+
+Sistemas distribuídos: Onde os dados precisam ser sincronizados entre diferentes bancos de dados em diferentes servidores.
+APIs públicas: Onde os identificadores precisam ser únicos e difíceis de adivinhar (melhor para segurança).
+Aplicações móveis: Onde os dados podem ser gerados localmente no dispositivo e depois sincronizados com o banco de dados central.
+
+Arrays: PostgreSQL suporta arrays de qualquer tipo de dado, tornando-o flexível para armazenar coleções de dados.
+```sql
+CREATE TABLE alunos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    notas INT[]
+);
+```
+Tipos Personalizados (Custom Types): O PostgreSQL permite que você crie seus próprios tipos de dados.
+```sql
+CREATE TYPE estado AS ENUM ('AC', 'AL', 'AM', 'BA');
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    estado estado
+);
+```
+O tipo ENUM em PostgreSQL é usado para representar uma lista de valores possíveis, ou seja, ele restringe os valores que uma coluna pode assumir para um conjunto específico.
+
+No caso, você está criando um tipo estado que só pode ter um dos seguintes valores:
+
+'AC' (Acre)
+'AL' (Alagoas)
+'AM' (Amazonas)
+'BA' (Bahia)
+
+Podemos declarar algo como uma estrutura:
+
+```sql
+CREATE TYPE endereco AS (
+    rua VARCHAR(100),
+    numero INT,
+    cidade VARCHAR(50),
+    cep VARCHAR(10)
+);
+
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    endereco endereco
+);
+```
+
+### Views e Materialized Views
+
+#### Views:
+
+As views são consultas SQL armazenadas no banco de dados. Elas não armazenam os dados fisicamente, 
+mas são uma forma prática de acessar dados de forma organizada, podendo simplificar consultas complexas.
+
+Exemplo de criação de view:
+
+```sql
+CREATE VIEW clientes_ativos AS
+SELECT cliente_id, nome
+FROM clientes
+WHERE status = 'ativo';
+```
+Uso: As views são frequentemente usadas para encapsular lógica de consulta e apresentar resultados de maneira organizada.
+Você pode consultar uma view como se fosse uma tabela:
+
+```sql
+SELECT * FROM clientes_ativos;
+```
+Vantagens:
+
+Encapsulamento de lógica de consulta.
+Simplificação de operações repetitivas.
+
+Desvantagens:
+
+Como não armazena dados, a performance pode ser afetada se a consulta subjacente for complexa.
+
+#### Materialized Views:
+
+As materialized views armazenam fisicamente os dados da consulta, tornando as consultas subsequentes mais rápidas,
+já que não precisam ser recalculadas toda vez.
+
+Exemplo de criação de materialized view:
+
+```sql
+CREATE MATERIALIZED VIEW mv_clientes_ativos AS
+SELECT cliente_id, nome
+FROM clientes
+WHERE status = 'ativo';
+```
+
+Uso: As materialized views são ideais quando você tem consultas pesadas que não precisam ser atualizadas constantemente.
+Elas podem ser atualizadas manualmente ou automaticamente.
+
+Atualização: Para atualizar os dados em uma materialized view, você pode usar:
+
+```sql
+REFRESH MATERIALIZED VIEW mv_clientes_ativos;
+```
+Vantagens:
+
+Melhora a performance de consultas complexas, pois armazena os dados.
+Pode ser atualizada periodicamente para refletir os dados mais recentes.
+
+Desvantagens:
+
+Armazenamento físico é necessário.
+Pode ficar desatualizada se não for refrescada regularmente.
+
+# Tutorial Parte VIII - Funções e Procedimentos
+
+### Criação de Funções no PostgreSQL
+
+Funções no PostgreSQL são blocos de código que executam operações específicas e podem retornar um valor ou realizar uma ação.
+
+Sintaxe básica:
+
+```sql
+CREATE FUNCTION nome_da_funcao(parâmetros) 
+RETURNS tipo_de_retorno AS $$
+DECLARE
+    -- Declaração de variáveis locais
+BEGIN
+    -- Corpo da função (lógica)
+    RETURN valor_de_retorno;
+END;
+$$ LANGUAGE plpgsql;
+```
+Exemplo simples: Uma função que soma dois números:
+```sql
+CREATE FUNCTION somar(a INT, b INT) 
+RETURNS INT AS $$
+BEGIN
+    RETURN a + b;
+END;
+$$ LANGUAGE plpgsql;
+```
+Para chamar a função:
+```sql
+SELECT somar(5, 3);
+```
+```sql
+-- Fazendo uma função sozinho utilizando funções de agregação
+
+create function retorna_valor (id_param int)
+returns table (nome varchar, soma_valores decimal(10,2)) as $$
+begin
+	return query
+	select c.nome, sum(e.valor_compra)
+	from extrato_banco e
+	left join cliente c on e.cliente_id = c.id
+	where e.cliente_id = id_param
+	group by c.nome;
+end;
+$$ language plpgsql;
+
+select * from retorna_valor(2); -- Criei uma função que retorna o valor gasto no extrato, exatamente do id que eu enviar
+-- realmente faz sentido quando você utiliza várias e várias vezes.
+
+DROP FUNCTION retorna_valor;
+```
 
 # Tutorial Parte IX Controle e Segurança
 
