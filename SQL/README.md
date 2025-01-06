@@ -1163,6 +1163,10 @@ WHERE id IN (
 ```
 # Tutorial Parte VII Índices, Tipos de Dados Avançados e Views
 
+## Modelo Físico e Tipos de Índices no PostgreSQL
+
+O modelo físico de um banco de dados envolve a organização dos dados no disco e a maneira como eles são acessados. O PostgreSQL oferece diversos tipos de índices que podem ser usados para melhorar a performance das consultas.
+
 # Tutorial Parte VIII Funções e Procedimentos
 
 # Tutorial Parte IX Controle e Segurança
