@@ -131,7 +131,7 @@ TRUNCATE: Remove todos os dados de uma tabela, mas mantém a estrutura da tabela
 
 RENAME: Altera o nome de um objeto no banco de dados.
 
-DML (Data Manipulation Language)
+#### DML (Data Manipulation Language)
 
 Comandos DML são usados para manipular os dados dentro das tabelas de um banco de dados. Eles não alteram a estrutura do banco de dados, mas permitem que você faça operações com os dados armazenados. Alguns comandos DML incluem:
 
