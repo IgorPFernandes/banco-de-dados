@@ -2,7 +2,7 @@
 
 - [Tutorial Parte I - Entendendo as Nomenclaturas Iniciais](#tutorial-parte-i---entendendo-as-nomenclaturas-iniciais)
 - [Tutorial Parte II - Tipos de Dados](#tutorial-parte-ii---tipos-de-dados)
-- [Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas](#tutorial-parte-iii---comandos-criaçao-e-relacionamento-de-tabelas)
+- [Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas](#tutorial-parte-iii---comandos-criação-e-relacionamento-de-tabelas)
 - [Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas](#tutorial-parte-iv---funções-básicas-de-agregação-trigger-e-consultas)
 - [Tutorial Parte V - Como realizar backup, exportação e importação](#tutorial-parte-v---como-realizar-backup-exportação-e-importação)
 - [Tutorial Parte VI - Subqueries e CTEs](#tutorial-parte-vi---subqueries-e-ctes)
