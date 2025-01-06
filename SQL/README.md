@@ -6,7 +6,7 @@
 - [Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas](#tutorial-parte-iv---funções-básicas-de-agregação-trigger-e-consultas)
 - [Tutorial Parte V - Como realizar backup, exportação e importação](#tutorial-parte-v---como-realizar-backup-exportação-e-importação)
 - [Tutorial Parte VI - Subqueries e CTEs](#tutorial-parte-vi---subqueries-e-ctes)
-- [Tutorial Parte VII - Design e Modelagem de Banco de Dados](#tutorial-parte-vii---design-e-modelagem-de-banco-de-dados)
+- [Tutorial Parte VII - Índices, Tipos de Dados Avançados e Views](#tutorial-parte-vii---índices-tipos-de-dados-avançados-e-views)
 - [Tutorial Parte VIII - Funções e Procedimentos](#tutorial-parte-viii---funções-e-procedimentos)
 - [Tutorial Parte IX - Controle e Segurança](#tutorial-parte-ix---controle-e-segurança)
 - [Tutorial Parte X - Otimização de Consultas](#tutorial-parte-x---otimização-de-consultas)
@@ -1161,7 +1161,7 @@ WHERE id IN (
 );
 
 ```
-# Tutorial Parte VII Design e Modelagem de Banco de Dados
+# Tutorial Parte VII Índices, Tipos de Dados Avançados e Views
 
 # Tutorial Parte VIII Funções e Procedimentos
 
