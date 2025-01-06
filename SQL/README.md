@@ -122,9 +122,13 @@ Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garanti
 Comandos DDL são usados para definir e modificar a estrutura do banco de dados. Eles alteram o esquema do banco de dados e geralmente afetam a forma como os dados são armazenados. Alguns comandos DDL incluem:
 
 CREATE: Cria um novo banco de dados, tabela, índice, ou outra estrutura de dados.
+
 ALTER: Modifica a estrutura de uma tabela existente, como adicionar, alterar ou excluir colunas.
+
 DROP: Exclui um banco de dados, tabela ou outro objeto do banco de dados.
+
 TRUNCATE: Remove todos os dados de uma tabela, mas mantém a estrutura da tabela.
+
 RENAME: Altera o nome de um objeto no banco de dados.
 
 DML (Data Manipulation Language)
@@ -132,8 +136,11 @@ DML (Data Manipulation Language)
 Comandos DML são usados para manipular os dados dentro das tabelas de um banco de dados. Eles não alteram a estrutura do banco de dados, mas permitem que você faça operações com os dados armazenados. Alguns comandos DML incluem:
 
 SELECT: Recupera dados de uma ou mais tabelas.
+
 INSERT: Adiciona novos dados em uma tabela.
+
 UPDATE: Modifica dados existentes em uma tabela.
+
 DELETE: Remove dados de uma tabela.
 
 ```sql
