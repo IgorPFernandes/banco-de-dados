@@ -138,20 +138,80 @@ select nome,coalesce (email, 'Não informado') from clientes; -- Perceba a últi
 -- Primeiro: Mostre a quantidade total de pedidos para cada cliente e ordene o resultado por quantidade de pedidos em ordem decrescente.
 
 
+-- Acho que não dá para fazer sem retirar as duplicatas
+
+with delduplicatas as (
+	select cliente_id,nome,email,cidade, row_number() over (partition by nome, email, cidade order by cliente_id) as rn
+	from clientes
+)
+delete from clientes
+where cliente_id in (select cliente_id from delduplicatas where rn>1);
+
+select * from clientes;
+
+
+-- Percebi que não são duplicatas pq o e-mail está diferente, ou seja, poderiam ser apenas duas pessoas com nomes iguais que moram na mesma cidade
+-- Erro meu, mas pelomenos fazendo o código com o intuito certo não perdi nenhum dado.
+
 select distinct c.nome, count(*) as qnt_pedidos
 from pedidos p
 join clientes c on p.cliente_id = c.cliente_id
 group by c.nome, c.cliente_id
 order by qnt_pedidos desc, c.nome asc;
 
+
 -- Segundo: Atualize o email dos clientes de Salvador para salvador@novoemail.com, mas somente para os clientes que não possuem email.
+
+-- Não possuo clientes que não possui e-mail mas vamos fazer um insert
+
+insert into clientes(nome,email,cidade) values
+('Zezin',null,'Salvador');
+
+update clientes set email = 'salvador@novoemail.com' where email is null;
 
 -- Terceiro: Exclua todos os clientes que não realizaram pedidos.
 
+delete from clientes c
+where cliente_id not in (select cliente_id from pedidos);
+
+DELETE FROM clientes c
+WHERE NOT EXISTS (
+    SELECT 1 FROM pedidos p WHERE p.cliente_id = c.cliente_id
+);
+
+--verificar
+
+select c.nome
+from clientes c
+left join pedidos p on c.cliente_id = p.cliente_id
+where p.cliente_id is null; -- Se você substituir is null por is not null você consegue comparar com
+
+select * from clientes; -- Esse select e entender que deu certo, só ficaram os clientes com pedidos
+
 -- Quarto: Mostre os clientes que realizaram pedidos de produtos mais caros que 100 reais.
+
+select c.nome, p.valor_total
+from clientes c
+left join pedidos p on c.cliente_id = p.cliente_id
+where p.valor_total > 100.00;
 
 -- Quinto: Mostre o nome do produto e a quantidade total vendida de cada produto (considerando os itens de pedidos), ordenando pelo produto com maior quantidade vendida.
 
+select p.nome_produto, ped.quantidade
+from produtos p
+left join itens_pedido ped on p.produto_id = ped.produto_id
+order by ped.quantidade desc, nome_produto asc;
+
 -- Sexto: Encontre os clientes que realizaram mais de 2 pedidos.
 
+select distinct c.nome, count(*) as qnt_pedidos
+from pedidos p
+join clientes c on p.cliente_id = c.cliente_id
+group by c.nome, c.cliente_id
+having count(*) > 2; -- O having é usado pós função de agregação, então se você tem um count,sum e quer tratar esse valor usa o having.
+
 -- Sétimo: Mostre os 10 clientes mais recentes (com base no ID de cliente) e suas cidades, usando ORDER BY e LIMIT.
+
+select nome, cliente_id
+from clientes
+order by cliente_id desc limit 10;
