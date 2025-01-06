@@ -2,7 +2,7 @@
 
 - [Tutorial Parte I - Entendendo as Nomenclaturas Iniciais](#tutorial-parte-i---entendendo-as-nomenclaturas-iniciais)
 - [Tutorial Parte II - Tipos de Dados](#tutorial-parte-ii---tipos-de-dados)
-- [Tutorial Parte III - Criação e Relacionamento de Tabelas](#tutorial-parte-iii---criação-e-relacionamento-de-tabelas)
+- [Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas](#tutorial-parte-iii---comandos-criacao-e-relacionamento-de-tabelas)
 - [Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas](#tutorial-parte-iv---funções-básicas-de-agregação-trigger-e-consultas)
 - [Tutorial Parte V - Como realizar backup, exportação e importação](#tutorial-parte-v---como-realizar-backup-exportação-e-importação)
 - [Tutorial Parte VI - Subqueries e CTEs](#tutorial-parte-vi---subqueries-e-ctes)
@@ -113,7 +113,28 @@ Por exemplo:
 
 Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garantindo consistência e desempenho no banco de dados.
 
-# Tutorial Parte III - Criação e Relacionamento de Tabelas
+# Tutorial Parte III - Commandos,Criação e Relacionamento de Tabelas
+
+### Categorias de Comandos:
+
+#### DDL (Data Definition Language)
+
+Comandos DDL são usados para definir e modificar a estrutura do banco de dados. Eles alteram o esquema do banco de dados e geralmente afetam a forma como os dados são armazenados. Alguns comandos DDL incluem:
+
+CREATE: Cria um novo banco de dados, tabela, índice, ou outra estrutura de dados.
+ALTER: Modifica a estrutura de uma tabela existente, como adicionar, alterar ou excluir colunas.
+DROP: Exclui um banco de dados, tabela ou outro objeto do banco de dados.
+TRUNCATE: Remove todos os dados de uma tabela, mas mantém a estrutura da tabela.
+RENAME: Altera o nome de um objeto no banco de dados.
+
+DML (Data Manipulation Language)
+
+Comandos DML são usados para manipular os dados dentro das tabelas de um banco de dados. Eles não alteram a estrutura do banco de dados, mas permitem que você faça operações com os dados armazenados. Alguns comandos DML incluem:
+
+SELECT: Recupera dados de uma ou mais tabelas.
+INSERT: Adiciona novos dados em uma tabela.
+UPDATE: Modifica dados existentes em uma tabela.
+DELETE: Remove dados de uma tabela.
 
 ```sql
 
