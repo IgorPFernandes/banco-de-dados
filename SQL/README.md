@@ -282,6 +282,7 @@ select * from condominio;
 -- Agora repita todos os comandos anteriores de Inner, Left, Right, Full e Cross. Agora você vai entender a diferença!
 ```
 </details>
+
 # Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas
 <details>
   <summary>Clique para expandir/ocultar</summary>
