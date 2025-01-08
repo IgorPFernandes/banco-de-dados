@@ -38,6 +38,8 @@ Exemplo:
 </details>
   
 # Tutorial Parte II - Tipos de Dados
+<details>
+  <summary>Clique para expandir/ocultar</summary>
 
 ## Tipos de Dados em SQL
 
@@ -99,8 +101,11 @@ Por exemplo:
 
 Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garantindo consistência e desempenho no banco de dados.
 
-# Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas
+</details>
 
+# Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas
+<details>
+  <summary>Clique para expandir/ocultar</summary>
 ### Categorias de Comandos:
 
 #### DDL (Data Definition Language)
@@ -276,7 +281,10 @@ select * from condominio;
 
 -- Agora repita todos os comandos anteriores de Inner, Left, Right, Full e Cross. Agora você vai entender a diferença!
 ```
+</details>
 # Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas
+<details>
+  <summary>Clique para expandir/ocultar</summary>
 
 ```sql
 -- Vamos criar um novo contexto com novas tabelas para aprender sobre funções básicas de agregação (count,sum,avg,max,min)
@@ -649,9 +657,10 @@ having count(*) > 2; -- O having é usado pós função de agregação, então s
 select nome, cliente_id
 from clientes
 order by cliente_id desc limit 10;
-
-
 ```
+
+</details>
+
 # Tutorial Parte V - Como realizar backup, exportação e importação
 
 ```sql
