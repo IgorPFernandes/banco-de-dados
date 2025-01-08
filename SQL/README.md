@@ -664,6 +664,9 @@ order by cliente_id desc limit 10;
 
 # Tutorial Parte V - Como realizar backup, exportação e importação
 
+<details>
+  <summary>Clique para expandir/ocultar</summary>
+
 ```sql
 
 -- Vamos começar com um full backup
@@ -1038,7 +1041,12 @@ ALTER TABLE public.extrato_banco
 ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credito(id);
 ```
 
+</details>
+
 # Tutorial Parte VI - Subqueries e CTEs
+<details>
+  <summary>Clique para expandir/ocultar</summary>
+
 ```sql
 -- Uma subquerie executa uma subconsulta dentro de uma query comum que você está realizando, por exemplo:
 
@@ -1186,7 +1194,11 @@ WHERE id IN (
 
 ```
 
+</details>
+
 # Tutorial Parte VII Índices, Tipos de Dados Avançados e Views
+<details>
+  <summary>Clique para expandir/ocultar</summary>
 
 ## Modelo Físico e Tipos de Índices no PostgreSQL
 
@@ -1435,6 +1447,8 @@ select * from retorna_valor(2); -- Criei uma função que retorna o valor gasto 
 
 DROP FUNCTION retorna_valor;
 ```
+
+</details>
 
 # Tutorial Parte IX Controle e Segurança
 
