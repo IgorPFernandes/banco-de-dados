@@ -2,6 +2,8 @@
 <details>
   <summary>Clique para expandir/ocultar</summary>
 	
+<br>
+	
 Neste tutorial, vamos entender as nomenclaturas e conceitos básicos relacionados a banco de dados, postgreSQL e operações comuns em um banco relacional.
 
 ## O que é uma **query**?
@@ -108,6 +110,8 @@ Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garanti
 <details>
   <summary>Clique para expandir/ocultar</summary>
 	
+<br>	
+
 ### Categorias de Comandos:
 
 #### DDL (Data Definition Language)
@@ -288,7 +292,9 @@ select * from condominio;
 # Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas
 <details>
   <summary>Clique para expandir/ocultar</summary>
-
+	
+<br>
+	
 ```sql
 -- Vamos criar um novo contexto com novas tabelas para aprender sobre funções básicas de agregação (count,sum,avg,max,min)
 
@@ -669,6 +675,8 @@ order by cliente_id desc limit 10;
 <details>
   <summary>Clique para expandir/ocultar</summary>
 
+<br>
+
 ```sql
 
 -- Vamos começar com um full backup
@@ -1046,8 +1054,11 @@ ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credit
 </details>
 
 # Tutorial Parte VI - Subqueries e CTEs
+
 <details>
   <summary>Clique para expandir/ocultar</summary>
+
+<br>
 
 ```sql
 -- Uma subquerie executa uma subconsulta dentro de uma query comum que você está realizando, por exemplo:
