@@ -1,6 +1,7 @@
 # Tutorial Parte I - Entendendo as Nomenclaturas Iniciais
 <details>
   <summary>Clique para expandir/ocultar</summary>
+	
 Neste tutorial, vamos entender as nomenclaturas e conceitos básicos relacionados a banco de dados, postgreSQL e operações comuns em um banco relacional.
 
 ## O que é uma **query**?
@@ -106,6 +107,7 @@ Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garanti
 # Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas
 <details>
   <summary>Clique para expandir/ocultar</summary>
+	
 ### Categorias de Comandos:
 
 #### DDL (Data Definition Language)
