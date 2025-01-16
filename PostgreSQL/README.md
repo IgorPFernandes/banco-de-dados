@@ -1,9 +1,21 @@
+# Sumário
+
+- [Tutorial Parte I - Entendendo as Nomenclaturas Iniciais](#tutorial-parte-i---entendendo-as-nomenclaturas-iniciais)
+- [Tutorial Parte II - Tipos de Dados](#tutorial-parte-ii---tipos-de-dados)
+- [Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas](#tutorial-parte-iii---comandos-criação-e-relacionamento-de-tabelas)
+- [Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas](#tutorial-parte-iv---funções-básicas-de-agregação-trigger-e-consultas)
+- [Tutorial Parte V - Como realizar backup, exportação e importação](#tutorial-parte-v---como-realizar-backup-exportação-e-importação)
+- [Tutorial Parte VI - Subqueries e CTEs](#tutorial-parte-vi---subqueries-e-ctes)
+- [Tutorial Parte VII - Índices, Tipos de Dados Avançados e Views](#tutorial-parte-vii-índices-tipos-de-dados-avançados-e-views)
+- [Tutorial Parte VIII - Funções e Procedimentos](#tutorial-parte-viii---funções-e-procedimentos)
+- [Tutorial Parte IX - Controle e Segurança](#tutorial-parte-ix---controle-e-segurança)
+- [Tutorial Parte X - Otimização de Consultas](#tutorial-parte-x---otimização-de-consultas)
+- [Tutorial Parte XI - Trabalhando com Tipos de Dados Avançados](#tutorial-parte-xi---trabalhando-com-tipos-de-dados-avançados)
+- [Tutorial Parte XII - Integração e Automação](#tutorial-parte-xii---integração-e-automação)
+- [Tutorial Parte XIII - Projetos e Estudos de Caso](#tutorial-parte-xiii---projetos-e-estudos-de-caso)
+
 # Tutorial Parte I - Entendendo as Nomenclaturas Iniciais
-<details>
-  <summary>Clique para expandir/ocultar</summary>
-	
-<br>
-	
+
 Neste tutorial, vamos entender as nomenclaturas e conceitos básicos relacionados a banco de dados, postgreSQL e operações comuns em um banco relacional.
 
 ## O que é uma **query**?
@@ -38,11 +50,8 @@ Uma **chave estrangeira** é uma coluna em uma tabela que faz referência à cha
 
 Exemplo:
 - Em uma tabela de **usuários**, a chave estrangeira pode ser `condominio_id`, que faz referência à tabela `condominio` e liga um usuário a um condomínio específico. (Presente no exemplo 1 dos scripts)
-</details>
-  
+
 # Tutorial Parte II - Tipos de Dados
-<details>
-  <summary>Clique para expandir/ocultar</summary>
 
 ## Tipos de Dados em SQL
 
@@ -104,13 +113,7 @@ Por exemplo:
 
 Com esses tipos de dados, você pode modelar tabelas de forma eficiente, garantindo consistência e desempenho no banco de dados.
 
-</details>
-
 # Tutorial Parte III - Comandos, Criação e Relacionamento de Tabelas
-<details>
-  <summary>Clique para expandir/ocultar</summary>
-	
-<br>	
 
 ### Categorias de Comandos:
 
@@ -287,14 +290,8 @@ select * from condominio;
 
 -- Agora repita todos os comandos anteriores de Inner, Left, Right, Full e Cross. Agora você vai entender a diferença!
 ```
-</details>
-
 # Tutorial Parte IV - Funções básicas de Agregação, Trigger e Consultas
-<details>
-  <summary>Clique para expandir/ocultar</summary>
-	
-<br>
-	
+
 ```sql
 -- Vamos criar um novo contexto com novas tabelas para aprender sobre funções básicas de agregação (count,sum,avg,max,min)
 
@@ -666,16 +663,10 @@ having count(*) > 2; -- O having é usado pós função de agregação, então s
 select nome, cliente_id
 from clientes
 order by cliente_id desc limit 10;
+
+
 ```
-
-</details>
-
 # Tutorial Parte V - Como realizar backup, exportação e importação
-
-<details>
-  <summary>Clique para expandir/ocultar</summary>
-
-<br>
 
 ```sql
 
@@ -1051,15 +1042,7 @@ ALTER TABLE public.extrato_banco
 ADD CONSTRAINT fk_cartao FOREIGN KEY (cartao_id) REFERENCES public.cartao_credito(id);
 ```
 
-</details>
-
 # Tutorial Parte VI - Subqueries e CTEs
-
-<details>
-  <summary>Clique para expandir/ocultar</summary>
-
-<br>
-
 ```sql
 -- Uma subquerie executa uma subconsulta dentro de uma query comum que você está realizando, por exemplo:
 
@@ -1207,11 +1190,7 @@ WHERE id IN (
 
 ```
 
-</details>
-
 # Tutorial Parte VII Índices, Tipos de Dados Avançados e Views
-<details>
-  <summary>Clique para expandir/ocultar</summary>
 
 ## Modelo Físico e Tipos de Índices no PostgreSQL
 
@@ -1460,8 +1439,6 @@ select * from retorna_valor(2); -- Criei uma função que retorna o valor gasto 
 
 DROP FUNCTION retorna_valor;
 ```
-
-</details>
 
 # Tutorial Parte IX Controle e Segurança
 
