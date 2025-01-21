@@ -97,4 +97,32 @@ SELECT * FROM order_items;
 DELETE FROM order_items
 WHERE order_item_id = 81;
 
+SELECT 
+    datname AS database_name,
+    COUNT(*) AS connection_count
+FROM 
+    pg_stat_activity
+GROUP BY 
+    datname
+ORDER BY 
+    connection_count DESC;
+
+SELECT 
+    application_name,
+    COUNT(*) AS connection_count
+FROM 
+    pg_stat_activity
+GROUP BY 
+    application_name
+ORDER BY 
+    connection_count DESC;
+
+
+SELECT application_name, state, datname, query
+FROM pg_stat_activity;
+
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE state = 'idle'
+  AND pid <> pg_backend_pid();
 
